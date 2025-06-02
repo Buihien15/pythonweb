@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %} 
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/rongbien.css' %}" />
+<link rel="stylesheet" href="{% static 'css/hom11.css' %}" />
+{% endblock %} 
+{% block title%} Rong biển {% endblock %} 
+
+{% block images %}
+<div class="kcook-banner">
+    <img
+        src="{%static 'images\rongbien-banner.png' %}"
+        class="img-fluid img-banner mx-auto d-block"
+        alt=""
+    />
+</div>
+{% endblock %} 
+
+{% block sanpham %}
+<div class="rongbien-page">
+  {% if data %}
+  <div class="container">
+    <div class="row rongbien-page-row justify-content-center ">
+      {% for rongbien in data %}
+          <div class="col-sm-3 col-md-3 rongbien-col" style="max-width: 15rem">
+            <div class="card">
+              <img
+                src="/media/{{rongbien.image}}"
+                class="card-img-top"
+                alt="..."
+              />
+            <div class="card-body text-center">
+                <a href="/chitietsanpham-list/{{rongbien.slug}}">
+                    <h5 class="card-title ">{{rongbien.product_name}}</h5>
+                    <p class="card-text">{{rongbien.price}}</p>
+                </a>
+                              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+
+            </div>
+          </div>
+       
+    </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  </div>
+</div>
+{% endblock %}

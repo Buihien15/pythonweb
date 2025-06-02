@@ -1,0 +1,166 @@
+{% extends 'main/base.html' %} 
+{% load static %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/thongtinmh.css' %}" />
+
+{% endblock %} 
+{% block secondnav %} {% endblock %}
+
+{% block title%} Thông tin mua hàng {% endblock %} 
+
+{% block tieude %}
+<h1 class="text-center thongtinmuahang-title">Thông tin mua hàng</h1>
+{% endblock %}
+
+{% block sanpham %}
+<form  class="was-validated form-muahang" id="form">
+   <div class="mb-3 user-info">
+     <label for="name" class="form-label">1. Họ và Tên</label>
+     <input type="text" class="form-control form-control-lg" id="name" placeholder="Hãy nhập Họ và Tên" name="name" required>
+     <div class="valid-feedback">Valid.</div>
+     <div class="invalid-feedback">Hãy điền đầy đủ thông tin</div>
+   </div>
+   <!-- <div class="mb-3 user-info" >
+     <label for="sdt" class="form-label">2. Số điện thoại</label>
+     <input type="text" class="form-control form-control-lg" id="sdt" placeholder="Hãy nhập Số điện thoại" name="sdt" required>
+     <div class="valid-feedback">Valid.</div>
+     <div class="invalid-feedback">Hãy điền đầy đủ thông tin</div>
+   </div> -->
+
+   <div class="mb-3 user-info">
+      <label for="email" class="form-label">2. Email</label>
+      <input type="email" class="form-control form-control-lg" id="email" placeholder="Hãy nhập Email" name="email" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Hãy điền đầy đủ thông tin</div>
+    </div>
+    <div class="mb-3 shipping-info">
+      <label for="address" class="form-label">3. Địa chỉ</label>
+      <input type="text" class="form-control form-control-lg" id="address" placeholder="Hãy nhập địa chỉ" name="address" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Hãy điền đầy đủ thông tin</div>
+    </div>
+    <label for="" class="mb-3 payment-info">4. Hình thức thanh toán</label>
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="radio" name="thanhtoan" id="thanhtoankhinhanhang">
+      <label class="form-check-label" for="thanhtoankhinhanhang">
+        Thanh toán khi nhận hàng
+      </label>
+    </div>
+    <div class="form-check mb-3 payment-info">
+      <input class="form-check-input" type="radio" name="thanhtoan" id="thanhtoanonline" checked>
+      <label class="form-check-label" for="thanhtoanonline">
+        Thanh toán chuyển khoản
+      </label>
+    </div>
+    <div class="col-lg-6">
+			<div class="box-element">
+				<hr>
+				<h3>Hóa đơn</h3>
+				<hr>
+				{% for item in items %}
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="/media/{{item.product.image}}" width="100px"></div>
+					<div style="flex:2"><p>{{item.product.product_name}}</p></div>
+					<div style="flex:1"><p>{{item.product.price}}</p></div>
+					<div style="flex:1"><p>x{{item.quantity}}</p></div>
+				</div>
+				{% endfor %}
+				<h5>Số lượng:   {{cartItems}}</h5>
+				<h5>Tổng:   {{order.get_cart_total}}</h5>
+			</div>
+		</div>
+
+    <div class="d-grid gap-2 col-4 mx-auto mt-5">
+         <button type="submit" class="btn btn-primary btn-lg btn-nopform" id="form-button">Gửi</button>
+    </div>
+ </form>
+
+ 
+{% endblock %}
+
+{% block checkoutjs %}
+<script type="text/javascript">
+  var total = '{{order.get_cart_total}}'
+  // var shipping = '{{order.shipping}}'
+
+  // if (shipping == 'False'){
+  //    document.getElementById('shipping-info').innerHTML = ''
+  // }
+
+  if (user != 'AnonymousUser'){
+     document.getElementsByClassName('user-info').innerHTML = ''
+   }
+
+  // if (shipping == 'False' && user != 'AnonymousUser'){
+  //   //Hide entire form if user is logged in and shipping is false
+  //     document.getElementById('form-wrapper').classList.add("hidden");
+  //     //Show payment if logged in user wants to buy an item that does not require shipping
+  //       document.getElementById('payment-info').classList.remove("hidden");
+  // }
+
+  var form = document.getElementById('form')
+  form.addEventListener('submit', function(e){
+      e.preventDefault()
+      console.log('Form Submitted...')
+      // document.getElementById('form-button').classList.add("hidden");
+      // document.getElementById('payment-info').classList.remove("hidden");
+    })
+
+  
+    document.getElementById('form-button').addEventListener('click', function(e){
+      submitFormData()
+    })
+    
+
+    function submitFormData(){
+      // console.log('Payment button clicked')
+      console.log('Button Clicked')
+      var userFormData = {
+      'name':null,
+      'email':null,
+      'total':total,
+    }
+
+    var shippingInfo = {
+      'address':null,
+      // 'city':null,
+      // 'state':null,
+      // 'zipcode':null,
+    }
+  
+        shippingInfo.address = form.address.value
+       
+      if (user == 'AnonymousUser'){
+        userFormData.name = form.name.value
+        userFormData.email = form.email.value
+      }
+
+      console.log('Shipping Info:', shippingInfo)
+      console.log('User Info:', userFormData)
+
+      var url = "/process_order/"
+      fetch(url, {
+        method:'POST',
+        headers:{
+          'Content-Type':'applicaiton/json',
+          'X-CSRFToken':csrftoken,
+        }, 
+        body:JSON.stringify({'form':userFormData, 'shipping':shippingInfo}),
+        
+      })
+      .then((response) => response.json())
+      .then((data) => {
+				console.log('Success:', data);
+				alert('Mua hàng thành công');  
+
+				cart = {}
+				document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
+				window.location.href = "{% url 'home' %}"
+
+				})
+    }
+</script>
+
+{% endblock %}

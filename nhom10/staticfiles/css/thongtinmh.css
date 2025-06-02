@@ -1,0 +1,55 @@
+@font-face {
+    font-family: quicksand-light;
+    src: url(../font/Quicksand-Light.ttf);
+}
+
+@font-face {
+    font-family: quicksand;
+    src: url(../font/Quicksand-Regular.ttf);
+}
+
+@font-face {
+    font-family: quicksand-bold;
+    src: url(../font/Quicksand-Bold.ttf);
+}
+
+@font-face {
+    font-family: quicksand-medium;
+    src: url(../font/Quicksand-Medium.ttf);
+}
+
+@font-face {
+    font-family: reenie-beenie;
+    src: url(../font/ReenieBeanie-Regular.ttf);
+}
+
+.thongtinmuahang-title{
+    padding-top: 30px;
+    font-size: 40px;
+    font-family: quicksand-bold;
+}
+.form-muahang{
+    padding-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 100px;
+    font-family: quicksand-bold;
+    font-size: 27px;
+}
+.form-check label{
+    color: black !important;
+}
+.form-control{
+    border-radius: 15px !important;
+}
+.form-check label{
+    font-family: quicksand;
+}
+.form-muahang .btn-nopform{
+    color: #000;
+    border-radius: 20px;
+    background-color: #FFA726;
+    border-color: #FFA726;
+    font-size: 32px;
+
+}

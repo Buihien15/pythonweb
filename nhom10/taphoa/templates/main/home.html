@@ -1,0 +1,205 @@
+{% extends 'main/base.html' %} 
+{% load static %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}" />
+<link rel="stylesheet" href="{% static 'css/hom11.css' %}" />
+{% endblock %} 
+
+{% block images %}
+<div class="slider">
+  <div class="slides">
+    <input type="radio" name="radio-btn" id="radio1" >
+    <input type="radio" name="radio-btn" id="radio2">
+    <input type="radio" name="radio-btn" id="radio3">
+    <input type="radio" name="radio-btn" id="radio4">
+    <input type="radio" name="radio-btn" id="radio5">
+    
+    <div class="slide first">
+      <img src="{% static 'images/2.png' %}" alt="" class="img-fluid img-banner mx-auto d-block">
+    </div>
+    <div class="slide">
+      <img src="{% static 'images/banner.png' %}" alt="" class="img-fluid img-banner mx-auto d-block">
+    </div>
+    <div class="slide">
+      <img src="{% static 'images/3.png' %}" alt="" class="img-fluid img-banner mx-auto d-block">
+    </div>
+    <div class="slide">
+      <img src="{% static 'images/4.png' %}" alt="" class="img-fluid img-banner mx-auto d-block">
+    </div>
+    <div class="slide">
+      <img src="{% static 'images/5.png' %}" alt="" class="img-fluid img-banner mx-auto d-block">
+    </div>
+    
+    <div class="navigation-auto">
+      <div class="auto-btn1"></div>
+      <div class="auto-btn2"></div>
+      <div class="auto-btn3"></div>
+      <div class="auto-btn4"></div>
+      <div class="auto-btn5"></div>
+    </div>
+  </div>
+  
+  <div class="navigation-manual">
+    <label for="radio1" class="manual-btn"></label>
+    <label for="radio2" class="manual-btn"></label>
+    <label for="radio3" class="manual-btn"></label>
+    <label for="radio4" class="manual-btn"></label>
+    <label for="radio5" class="manual-btn"></label>
+  </div>
+</div>
+{% endblock %} 
+
+{% block title %}Trang chủ Mart{% endblock %} 
+
+{% block sanpham %}
+<div class="container">
+
+  <!-- Sản phẩm bán chạy -->
+  <h3 class="home-title">Sản phẩm bán chạy</h3>
+  {% if banchay %}
+  <div class="container">
+    <div class="row banchay-page justify-content-center">
+      {% for item in banchay %}
+        <div class="col-sm-3 col-md-3 banchay-col" style="max-width: 15rem">
+          <div class="card">
+            <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
+            <div class="card-body text-center">
+              <a href="/chitietsanpham-list/{{ item.slug }}">
+                <h5 class="card-title">{{ item.product_name }}</h5>
+                <p class="card-text">{{ item.price }}</p>
+              </a>
+              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Gia vị & Sốt -->
+  <h3 class="home-title"><a href="/giavisot/">Gia vị & Sốt</a></h3>
+  {% if giavisot %}
+  <div class="container">
+    <div class="row giavisot-page justify-content-center">
+      {% for item in giavisot %}
+        <div class="col-sm-3 col-md-3 giavisot-col" style="max-width: 15rem">
+          <div class="card">
+            <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
+            <div class="card-body text-center">
+              <a href="/chitietsanpham-list/{{ item.slug }}">
+                <h5 class="card-title">{{ item.product_name }}</h5>
+                <p class="card-text">{{ item.price }}</p>
+              </a>
+              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Bánh kẹo -->
+  <h3 class="home-title"><a href="/banhkeo/">Bánh kẹo</a></h3>
+  {% if banhkeo %}
+  <div class="container">
+    <div class="row banhkeo-page justify-content-center">
+      {% for item in banhkeo %}
+        <div class="col-sm-3 col-md-3 banhkeo-col" style="max-width: 15rem">
+          <div class="card">
+            <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
+            <div class="card-body text-center">
+              <a href="/chitietsanpham-list/{{ item.slug }}">
+                <h5 class="card-title">{{ item.product_name }}</h5>
+                <p class="card-text">{{ item.price }}</p>
+              </a>
+              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Thực phẩm ăn liền -->
+  <h3 class="home-title"><a href="/thucphamanlien/">Thực phẩm ăn liền</a></h3>
+  {% if anlien %}
+  <div class="container">
+    <div class="row anlien-page justify-content-center">
+      {% for item in anlien %}
+        <div class="col-sm-3 col-md-3 douong-col" style="max-width: 15rem">
+          <div class="card">
+            <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
+            <div class="card-body text-center">
+              <a href="/chitietsanpham-list/{{ item.slug }}">
+                <h5 class="card-title">{{ item.product_name }}</h5>
+                <p class="card-text">{{ item.price }}</p>
+              </a>
+              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Đồ uống -->
+  <h3 class="home-title"><a href="/douong/">Đồ uống</a></h3>
+  {% if douong %}
+  <div class="container">
+    <div class="row douong-page justify-content-center">
+      {% for item in douong %}
+        <div class="col-sm-3 col-md-3 douong-col" style="max-width: 15rem">
+          <div class="card">
+            <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
+            <div class="card-body text-center">
+              <a href="/chitietsanpham-list/{{ item.slug }}">
+                <h5 class="card-title">{{ item.product_name }}</h5>
+                <p class="card-text">{{ item.price }}</p>
+              </a>
+              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Rong biển -->
+  <h3 class="home-title"><a href="/rongbien/">Sữa</a></h3>
+  {% if rongbien %}
+  <div class="container">
+    <div class="row rongbien-page justify-content-center">
+      {% for item in rongbien %}
+        <div class="col-sm-3 col-md-3 rongbien-col" style="max-width: 15rem">
+          <div class="card">
+            <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
+            <div class="card-body text-center">
+              <a href="/chitietsanpham-list/{{ item.slug }}">
+                <h5 class="card-title">{{ item.product_name }}</h5>
+                <p class="card-text">{{ item.price }}</p>
+              </a>
+              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+</div> <!-- End container -->
+{% endblock %}
+
+

@@ -1,0 +1,48 @@
+
+@font-face {
+    font-family: quicksand-light;
+    src: url(../font/Quicksand-Light.ttf);
+  }
+  @font-face {
+    font-family: quicksand;
+    src: url(../font/Quicksand-Regular.ttf);
+  }
+  @font-face {
+    font-family: quicksand-bold;
+    src: url(../font/Quicksand-Bold.ttf);
+  }
+  @font-face {
+    font-family: quicksand-medium;
+    src: url(../font/Quicksand-Medium.ttf);
+  }
+  @font-face {
+    font-family: reenie-beenie;
+    src: url(../font/ReenieBeanie-Regular.ttf);
+  }
+
+.img-banner{
+    padding: 10px;
+    width: 1600px;
+}
+.card-group{
+    padding: 30px !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.douong-page h5{
+    font-size: 20px;
+    font-family: quicksand-bold;
+}
+/* .douong-page p{
+    font-size: 20px;
+    font-family: quicksand-bold;
+} */
+.douong-page a{
+    text-decoration: none;
+    color: #000;
+}
+.douong-col{
+  margin: 20px;
+  padding: 0px;
+}

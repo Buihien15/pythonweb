@@ -1,0 +1,130 @@
+.home-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 0 1rem 0;
+  display: inline-block;
+  color: #333;              /* Màu chữ mặc định */
+  text-decoration: none;    /* Bỏ gạch chân */
+  transition: color 0.3s ease;
+}
+.home-title  a{
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 0 1rem 0;
+  display: inline-block;
+  color: #333;              /* Màu chữ mặc định */
+  text-decoration: none;    /* Bỏ gạch chân */
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+
+.home-title a:hover {
+  color: #ff6600;           /* Màu đổi khi hover/focus */
+  text-decoration: underline;
+}
+/* Container chứa các cột sản phẩm */
+.row.banchay-page,
+.row.giavisot-page,
+.row.banhkeo-page,
+.row.anlien-page,
+.row.douong-page,
+.row.rongbien-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem; /* khoảng cách giữa các card */
+}
+
+/* Cột sản phẩm */
+.col-sm-3.col-md-3.banchay-col,
+.col-sm-3.col-md-3.giavisot-col,
+.col-sm-3.col-md-3.banhkeo-col,
+.col-sm-3.col-md-3.douong-col,
+.col-sm-3.col-md-3.rongbien-col,
+.col-sm-3.col-md-3.anlien-col {
+  max-width: 15rem;
+  flex: 1 1 15rem; /* cho co giãn vừa phải */
+  display: flex; /* để card chiếm hết chiều cao cha */
+}
+
+/* Card sản phẩm */
+.card {
+    min-height: 350px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Ảnh sản phẩm */
+.card-img-top {
+  height: 160px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Body card */
+.card-body {
+  min-height: 180px;
+  flex-grow: 1; /* kéo dài phần nội dung để card đồng đều chiều cao */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* căn đều nội dung */
+  text-align: center;
+}
+
+/* Tiêu đề sản phẩm */
+.card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  max-height: 4.5rem; /* 3 dòng nếu line-height = 1.5rem */
+  line-height: 1.5rem;
+}
+
+
+
+/* Giá sản phẩm */
+.card-text {
+  color: #007bff;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  min-height: 1.5rem; /* cố định chiều cao giá */
+}
+
+/* Link sản phẩm */
+a {
+  text-decoration: none;
+}
+
+a:hover .card-title {
+  color: #0056b3;
+}
+
+/* Nút Thêm vào giỏ hàng */
+.add-to-cart-btn {
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 0;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %} 
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/thucphamanlien.css' %}" />
+<link rel="stylesheet" href="{% static 'css/hom11.css' %}" />
+{% endblock %} 
+{% block title%} Thực phẩm ăn liền {% endblock %} 
+
+{% block images %}
+<div class="kcook-banner">
+    <img
+        src="{%static 'images\anlien-banner.png' %}"
+        class="img-fluid img-banner mx-auto d-block"
+        alt=""
+    />
+</div>
+{% endblock %} 
+
+{% block sanpham %}
+<div class="thucphamanlien-page">
+  {% if data %}
+  <div class="container">
+    <div class="row anlien-page-row justify-content-center ">
+      {% for anlien in data %}
+          <div class="col-sm-3 col-lg-3 anlien-col" style="max-width: 15rem">
+            <div class="card">
+              <img
+                src="/media/{{anlien.image}}"
+                class="card-img-top"
+                alt="..."
+              />
+            <div class="card-body text-center">
+                <a href="/chitietsanpham-list/{{anlien.slug}}">
+                    <h5 class="card-title ">{{anlien.product_name}}</h5>
+                    <p class="card-text">{{anlien.price}}</p>
+                </a>
+                              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+
+            </div>
+          </div>
+       
+    </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %} 
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/douong.css' %}" />
+<link rel="stylesheet" href="{% static 'css/hom11.css' %}" />
+{% endblock %} 
+{% block title%} Đồ uống {% endblock %} 
+
+{% block images %}
+<div class="kcook-banner">
+    <img
+        src="{%static 'images\douong-banner.png' %}"
+        class="img-fluid img-banner mx-auto d-block"
+        alt=""
+    />
+</div>
+{% endblock %} 
+
+{% block sanpham %}
+<div class="douong-page">
+  {% if data %}
+  <div class="container">
+    <div class="row douong-page-row justify-content-center ">
+      {% for douong in data %}
+          <div class="col-sm-3 col-md-3 douong-col" style="max-width: 15rem">
+            <div class="card">
+              <img
+                src="/media/{{douong.image}}"
+                class="card-img-top"
+                alt="..."
+              />
+            <div class="card-body text-center">
+                <a href="/chitietsanpham-list/{{douong.slug}}">
+                    <h5 class="card-title ">{{douong.product_name}}</h5>
+                    <p class="card-text">{{douong.price}}</p>
+                </a>
+                              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+
+            </div>
+          </div>
+       
+    </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  </div>
+</div>
+{% endblock %}
