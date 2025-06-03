@@ -19,7 +19,7 @@ urlpatterns = [
 
     # path("kcook/chitietkcook/", views.chitietkcook, name="chitietkcook"),
     path("thongtinmuahang/", views.thongtinmh, name="thongtinmuahang"),
-    path('chitietsanpham-list/<slug:slug>', views.chitietsanpham, name="chitietsanpham"),
+    path('chitietsanpham/<int:id>/', views.chitietsanpham, name='chitietsanpham'),
     path('search/', views.search, name='search'),
     path('update_item/',views.updateItem,name="update_item"),
     path('process_order/', views.processOrder, name="process_order"),

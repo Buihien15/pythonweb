@@ -33,11 +33,11 @@
                 alt="..."
               />
             <div class="card-body text-center">
-                <a href="/chitietsanpham-list/{{giavisot.slug}}">
+                <a href="{% url 'chitietsanpham' id=giavisot.id %}">
                     <h5 class="card-title ">{{giavisot.product_name}}</h5>
                     <p class="card-text">{{giavisot.price}}</p>
                 </a>
-                              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+                <button class="btn btn-primary add-to-cart-btn" data-product="{{ giavisot.id }}">Thêm vào giỏ hàng</button>
 
             </div>
           </div>

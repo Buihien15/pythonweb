@@ -56,20 +56,20 @@
 <div class="container">
 
   <!-- Sản phẩm bán chạy -->
-  <h3 class="home-title">Sản phẩm bán chạy</h3>
-  {% if banchay %}
+  <h3 class="home-title">Thực phẩm khô</h3>
+  {% if thucphamkho %}
   <div class="container">
     <div class="row banchay-page justify-content-center">
-      {% for item in banchay %}
-        <div class="col-sm-3 col-md-3 banchay-col" style="max-width: 15rem">
+      {% for item in thucphamkho %}
+        <div class="col-sm-3 col-md-3  banchay-col" style="max-width: 15rem">
           <div class="card">
             <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
             <div class="card-body text-center">
-              <a href="/chitietsanpham-list/{{ item.slug }}">
+              <a href="{% url 'chitietsanpham' id=item.id %}">
                 <h5 class="card-title">{{ item.product_name }}</h5>
-                <p class="card-text">{{ item.price }}</p>
+                <p class="card-text">{{ item.price }} đ</p>
               </a>
-              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+              <button class="btn btn-primary update-cart" data-product="{{ item.id }}" data-action="add">Thêm vào giỏ hàng</button>
 
             </div>
           </div>
@@ -89,11 +89,11 @@
           <div class="card">
             <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
             <div class="card-body text-center">
-              <a href="/chitietsanpham-list/{{ item.slug }}">
+              <a href="{% url 'chitietsanpham' id=item.id %}">
                 <h5 class="card-title">{{ item.product_name }}</h5>
-                <p class="card-text">{{ item.price }}</p>
+                <p class="card-text">{{ item.price }} đ</p>
               </a>
-              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+              <button class="btn btn-primary update-cart" data-product="{{ item.id }}" data-action="add">Thêm vào giỏ hàng</button>
 
             </div>
           </div>
@@ -113,11 +113,11 @@
           <div class="card">
             <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
             <div class="card-body text-center">
-              <a href="/chitietsanpham-list/{{ item.slug }}">
+              <a href="{% url 'chitietsanpham' id=item.id %}">
                 <h5 class="card-title">{{ item.product_name }}</h5>
-                <p class="card-text">{{ item.price }}</p>
+                <p class="card-text">{{ item.price }} đ</p>
               </a>
-              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+              <button class="btn btn-primary update-cart" data-product="{{ item.id }}" data-action="add">Thêm vào giỏ hàng</button>
 
             </div>
           </div>
@@ -129,19 +129,19 @@
 
   <!-- Thực phẩm ăn liền -->
   <h3 class="home-title"><a href="/thucphamanlien/">Thực phẩm ăn liền</a></h3>
-  {% if anlien %}
+  {% if thucphamanlien %}
   <div class="container">
     <div class="row anlien-page justify-content-center">
-      {% for item in anlien %}
-        <div class="col-sm-3 col-md-3 douong-col" style="max-width: 15rem">
+      {% for item in thucphamanlien %}
+        <div class="col-sm-3 col-md-3 anlien-col" style="max-width: 15rem">
           <div class="card">
             <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
             <div class="card-body text-center">
-              <a href="/chitietsanpham-list/{{ item.slug }}">
+              <a href="{% url 'chitietsanpham' id=item.id %}">
                 <h5 class="card-title">{{ item.product_name }}</h5>
-                <p class="card-text">{{ item.price }}</p>
+                <p class="card-text">{{ item.price }} đ</p>
               </a>
-              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+              <button class="btn btn-primary update-cart" data-product="{{ item.id }}" data-action="add">Thêm vào giỏ hàng</button>
 
             </div>
           </div>
@@ -161,11 +161,11 @@
           <div class="card">
             <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
             <div class="card-body text-center">
-              <a href="/chitietsanpham-list/{{ item.slug }}">
+              <a href="{% url 'chitietsanpham' id=item.id %}">
                 <h5 class="card-title">{{ item.product_name }}</h5>
-                <p class="card-text">{{ item.price }}</p>
+                <p class="card-text">{{ item.price }} đ</p>
               </a>
-              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+              <button class="btn btn-primary update-cart" data-product="{{ item.id }}" data-action="add">Thêm vào giỏ hàng</button>
 
             </div>
           </div>
@@ -177,19 +177,19 @@
 
   <!-- Rong biển -->
   <h3 class="home-title"><a href="/rongbien/">Sữa</a></h3>
-  {% if rongbien %}
+  {% if sua %}
   <div class="container">
     <div class="row rongbien-page justify-content-center">
-      {% for item in rongbien %}
+      {% for item in sua %}
         <div class="col-sm-3 col-md-3 rongbien-col" style="max-width: 15rem">
           <div class="card">
             <img src="/media/{{ item.image }}" class="card-img-top" alt="{{ item.product_name }}" />
             <div class="card-body text-center">
-              <a href="/chitietsanpham-list/{{ item.slug }}">
+              <a href="{% url 'chitietsanpham' id=item.id %}">
                 <h5 class="card-title">{{ item.product_name }}</h5>
-                <p class="card-text">{{ item.price }}</p>
+                <p class="card-text">{{ item.price }} đ</p>
               </a>
-              <button class="btn btn-primary add-to-cart-btn" data-product="{{ item.id }}">Thêm vào giỏ hàng</button>
+              <button class="btn btn-primary update-cart" data-product="{{ item.id }}" data-action="add">Thêm vào giỏ hàng</button>
 
             </div>
           </div>

@@ -9,6 +9,8 @@ from django.http import JsonResponse
 import json
 from .utils import cookieCart,cartData,guestOrder
 import datetime
+from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator
 
 # def index(response,id):
 #     ls = ToDoList.objects.get(id = id)
@@ -70,13 +72,13 @@ def home(response):
     cartdata=cartData(response)
     cartItems = cartdata['cartItems']
     
-    banchay = Product.objects.filter(pk__in = [47,37,41,51,54,62,64,71])
+    thucphamkho = Product.objects.filter(cat_name = 5)[:8]
     giavisot = Product.objects.filter(cat_name = 3)[:8]
     banhkeo = Product.objects.filter(cat_name = 6)[:8]
-    thucphamkho = Product.objects.filter(cat_name = 2)[:8]
+    thucphamanlien = Product.objects.filter(cat_name = 4)[:8]
     douong = Product.objects.filter(cat_name = 1)[:8] 
-    sua = Product.objects.filter(cat_name = 4)[:8]
-    context = {'banchay': banchay, 'cartItems': cartItems,'giavisot':giavisot,'banhkeo':banhkeo,'thucphamkho':thucphamkho,'douong':douong,'sua':sua}
+    sua = Product.objects.filter(cat_name = 2)[:8]
+    context = {'thucphamkho': thucphamkho, 'cartItems': cartItems,'giavisot':giavisot,'banhkeo':banhkeo,'thucphamanlien':thucphamanlien,'douong':douong,'sua':sua}
 
     return render(response, "main/home.html",context)
 
@@ -167,16 +169,13 @@ def updateItem(request):
 
     return JsonResponse('Item was added', safe=False)
 
-
-def chitietsanpham(request, slug):
-    """render trang chi tiết sản phẩm"""
-    cartdata=cartData(request)
+def chitietsanpham(request, id):
+    cartdata = cartData(request)
     cartItems = cartdata['cartItems']
 
-    data = Product.objects.get(slug=slug)
-    context = {'products': data, 'cartItems': cartItems}
+    product = get_object_or_404(Product, id=id)
+    context = {'products': product, 'cartItems': cartItems}
     return render(request, 'main/chitietsanpham.html', context)
-
 
 def giohang(request):
     """render trang giỏ hàng"""

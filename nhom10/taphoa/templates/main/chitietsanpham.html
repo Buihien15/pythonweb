@@ -3,17 +3,20 @@
 
 {% block linkcss %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/chitietsanpham.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/chitietsanpham1.css' %}" />
 
 {% endblock %}
 {% block title%}{{data.product_name}}{% endblock %}
 
 {% block tieude %}
+<div class="container">
 <h1 class="chitietsanpham-title">Chi tiết sản phẩm</h1>
 <p class="chitietsanpham-navigate">{{products.cat_name}} > {{products.product_name}}</p>
+</div>
 {% endblock %}
 
 {% block sanpham %}
-<div class="chitiet_header">
+<div class="chitiet_header container">
     <div class="row">
         <div class="col-12 col-md-6">
             <img src="/media/{{products.image}}" class="img-fluid img-banner mx-auto d-block" />
@@ -21,18 +24,17 @@
         </div>
         <div class="col-12 col-md-6 price-foodname">
             <p>{{products.product_name}}</p>
-            <h3>{{products.price}}</h3>
+            <span class="price-red">{{products.price}} đ</span><br>
             <button type="button" class="btn themvaogio-btn update-cart" data-action="add" data-product="{{products.id}}">Thêm vào giỏ hàng</button>
-            <a type="button" class="btn update-cart muangay-btn" data-action="add" data-product="{{products.id}}" href="/thongtinmuahang/">Mua ngay</a>
-
         </div>
     </div>
     
-</div>
+
 
 <div class="mota">
     <h2 class="header_mota">Mô tả sản phẩm</h2>
-    <p class="p_noidung">{{products.product_des}}</p>
+    <p class="p_noidung">{{products.description}}</p>
+</div>
 </div>
 
 

@@ -3,6 +3,8 @@
 
 {% block linkcss %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/giohang.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/giohang1.css' %}" />
+
 {% endblock %} 
 
 {% block title%}Giỏ hàng{% endblock %} 
@@ -16,7 +18,7 @@
         <div style="flex:1"></div>
         <div style="flex:2"><strong></strong></div>
         <div style="flex:1"><strong>Số lượng</strong></div>
-        <div style="flex:1"><strong>Tổng</strong></div>
+        <div style="flex:1"><strong>Đơn giá</strong></div>
       </div>
 
       {% for item in items %}

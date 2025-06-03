@@ -1,56 +1,60 @@
+/* Tiêu đề chính */
 .home-title {
   font-size: 1.5rem;
   font-weight: 600;
   margin: 1.5rem 0 1rem 0;
   display: inline-block;
-  color: #333;              /* Màu chữ mặc định */
-  text-decoration: none;    /* Bỏ gạch chân */
+  color: #333;
+  text-decoration: none;
   transition: color 0.3s ease;
-}
-.home-title  a{
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 1.5rem 0 1rem 0;
-  display: inline-block;
-  color: #333;              /* Màu chữ mặc định */
-  text-decoration: none;    /* Bỏ gạch chân */
-  transition: color 0.3s ease;
-  cursor: pointer;
 }
 
+.home-title a {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
 
 .home-title a:hover {
-  color: #ff6600;           /* Màu đổi khi hover/focus */
+  color: #ff6600;
   text-decoration: underline;
 }
-/* Container chứa các cột sản phẩm */
+
+/* Container chứa các sản phẩm (hiển thị grid 4 cột) */
 .row.banchay-page,
 .row.giavisot-page,
 .row.banhkeo-page,
 .row.anlien-page,
 .row.douong-page,
 .row.rongbien-page {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem; /* khoảng cách giữa các card */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  justify-items: center;
+  margin-bottom: 2rem;
 }
 
-/* Cột sản phẩm */
+/* Cột sản phẩm (dùng cho mỗi card) */
 .col-sm-3.col-md-3.banchay-col,
 .col-sm-3.col-md-3.giavisot-col,
 .col-sm-3.col-md-3.banhkeo-col,
 .col-sm-3.col-md-3.douong-col,
 .col-sm-3.col-md-3.rongbien-col,
 .col-sm-3.col-md-3.anlien-col {
-  max-width: 15rem;
-  flex: 1 1 15rem; /* cho co giãn vừa phải */
-  display: flex; /* để card chiếm hết chiều cao cha */
+  width: 100%;
+  max-width: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
 }
 
 /* Card sản phẩm */
 .card {
-    min-height: 350px;
+  padding: 1rem;
+  min-height: 250px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -69,20 +73,22 @@
 
 /* Ảnh sản phẩm */
 .card-img-top {
-  height: 160px;
-  object-fit: cover;
+  height: 200px;
+  object-fit: contain;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  width: 100%;
+  background-color: #f8f8f8;
 }
 
-/* Body card */
+/* Nội dung card */
 .card-body {
-  min-height: 180px;
-  flex-grow: 1; /* kéo dài phần nội dung để card đồng đều chiều cao */
+  min-height: 150px;
+  flex-grow: 1;
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* căn đều nội dung */
+  justify-content: space-between;
   text-align: center;
 }
 
@@ -91,11 +97,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  max-height: 4.5rem; /* 3 dòng nếu line-height = 1.5rem */
+  max-height: 4.5rem;
   line-height: 1.5rem;
 }
-
-
 
 /* Giá sản phẩm */
 .card-text {
@@ -103,7 +107,7 @@
   font-weight: 700;
   font-size: 1rem;
   margin-bottom: 1rem;
-  min-height: 1.5rem; /* cố định chiều cao giá */
+  min-height: 1.5rem;
 }
 
 /* Link sản phẩm */
@@ -115,9 +119,10 @@ a:hover .card-title {
   color: #0056b3;
 }
 
-/* Nút Thêm vào giỏ hàng */
+/* Nút thêm vào giỏ hàng */
 .add-to-cart-btn {
   background-color: #007bff;
+  color: white;
   border: none;
   border-radius: 6px;
   padding: 8px 0;
@@ -127,4 +132,27 @@ a:hover .card-title {
 
 .add-to-cart-btn:hover {
   background-color: #0056b3;
+}
+
+/* Responsive: Giảm số cột khi màn hình nhỏ hơn */
+@media (max-width: 992px) {
+  .row.banchay-page,
+  .row.giavisot-page,
+  .row.banhkeo-page,
+  .row.anlien-page,
+  .row.douong-page,
+  .row.rongbien-page {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .row.banchay-page,
+  .row.giavisot-page,
+  .row.banhkeo-page,
+  .row.anlien-page,
+  .row.douong-page,
+  .row.rongbien-page {
+    grid-template-columns: 1fr;
+  }
 }
