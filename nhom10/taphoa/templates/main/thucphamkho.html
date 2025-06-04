@@ -1,12 +1,12 @@
 {% extends 'main/base.html' %} 
 {% load static %}
 
+{% block title %} Thực phẩm khô {% endblock %}
+
 {% block linkcss %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/giavisot.css' %}" />
 <link rel="stylesheet" href="{% static 'css/list_sp.css' %}" />
-{% endblock %} 
-
-{% block title %} Gia vị & Sốt {% endblock %} 
+{% endblock %}
 
 {% block sanpham %}
 <div class="giavisot-page py-4">
@@ -20,8 +20,8 @@
           <strong>Danh mục</strong>
         </div>
         <ul class="list-group list-group-flush">
-          <li><p style="color:blue;padding-left: 10px;padding-top: 10px;">Gia vị & sốt</p></li>
-          <li><a class="list-group-item" href="/thucphamkho/">Thực phẩm khô</a></li>
+          <li><a class="list-group-item" href="/giavisot/">Gia vị & sốt</a></li>
+          <li><p style="color:blue;padding-left: 10px;padding-top: 10px;">Thực phẩm khô</p></li>
           <li><a class="list-group-item" href="/banhkeo/">Bánh kẹo</a></li>
           <li><a class="list-group-item" href="/douong/">Đồ uống</a></li>
           <li><a class="list-group-item" href="/thucphamanlien/">Thực phẩm ăn liền</a></li>
@@ -32,19 +32,18 @@
 
     <!-- Cột phải: Danh sách sản phẩm -->
     <div class="col-md-9">
-
       <div class="row justify-content-start">
-        <strong>Gia vị & sốt</strong>
-        {% for giavisot in data %}
+        <strong>Thực phẩm khô</strong>
+        {% for kho in data %}
           <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
             <div class="card">
-              <img src="/media/{{ giavisot.image }}" class="card-img-top" alt="..." />
+              <img src="/media/{{ kho.image }}" class="card-img-top" alt="{{ kho.product_name }}" />
               <div class="card-body text-center">
-                <a href="{% url 'chitietsanpham' id=giavisot.id %}">
-                  <h5 class="card-title">{{ giavisot.product_name }}</h5>
-                  <p class="card-text">{{ giavisot.price }} đ</p>
+                <a href="{% url 'chitietsanpham' id=kho.id %}">
+                  <h5 class="card-title">{{ kho.product_name }}</h5>
+                  <p class="card-text">{{ kho.price }} đ</p>
                 </a>
-                <button class="btn btn-primary update-cart" data-product="{{ giavisot.id }}" data-action="add">
+                <button class="btn btn-primary update-cart" data-product="{{ kho.id }}" data-action="add">
                   Thêm vào giỏ hàng
                 </button>
               </div>

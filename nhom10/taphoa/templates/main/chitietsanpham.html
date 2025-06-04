@@ -4,46 +4,117 @@
 {% block linkcss %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/chitietsanpham.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/chitietsanpham1.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/list_sp.css' %}" />
 
 {% endblock %}
-{% block title%}{{data.product_name}}{% endblock %}
+
+{% block title %}{{ products.product_name }}{% endblock %}
 
 {% block tieude %}
 <div class="container">
-<h1 class="chitietsanpham-title">Chi tiết sản phẩm</h1>
-<p class="chitietsanpham-navigate">{{products.cat_name}} > {{products.product_name}}</p>
+  <p class="chitietsanpham-navigate">
+    {% if products.cat_name.id == 1 %}
+      <a href="{% url 'douong' %}">Đồ uống</a>
+    {% elif products.cat_name.id == 6 %}
+      <a href="{% url 'banhkeo' %}">Bánh kẹo</a>
+    {% elif products.cat_name.id == 3 %}
+      <a href="{% url 'giavisot' %}">Gia vị & Sốt</a>
+    {% elif products.cat_name.id == 5 %}
+      <a href="{% url 'thucphamkho' %}">Thực phẩm khô</a>
+    {% elif products.cat_name.id == 2 %}
+      <a href="{% url 'sua' %}">Sữa</a>
+    {% elif products.cat_name.id == 4 %}
+      <a href="{% url 'thucphamanlien' %}">Thực phẩm ăn liền</a>
+    {% else %}
+      <span>Danh mục không xác định</span>
+    {% endif %}
+     > {{ products.product_name }}
+  </p>
 </div>
 {% endblock %}
 
 {% block sanpham %}
-<div class="chitiet_header container">
+<div class="container">
+<div class="chitiet_header">
     <div class="row">
         <div class="col-12 col-md-6">
-            <img src="/media/{{products.image}}" class="img-fluid img-banner mx-auto d-block" />
-
+            <img src="/media/{{ products.image }}" class="img-fluid img-banner mx-auto d-block" />
         </div>
         <div class="col-12 col-md-6 price-foodname">
-            <p>{{products.product_name}}</p>
-            <span class="price-red">{{products.price}} đ</span><br>
+            <p>{{ products.product_name }}</p>
             <button type="button" class="btn themvaogio-btn update-cart" data-action="add" data-product="{{products.id}}">Thêm vào giỏ hàng</button>
+              </div>
+    </div>
+
+    <div class="mota">
+        <h2 class="header_mota">Mô tả sản phẩm</h2>
+        <p class="p_noidung">{{ products.description }}</p>
+    </div>
+
+    <div class="sanpham-lienquan container mt-5">
+    <h2 class="header_mota header_mota-small">Sản phẩm liên quan</h2>
+    <div class="row">
+    {% for sp in related_products %}
+    <div class="col-5 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch"> <!-- col-6 cho mobile, col-md-4 (3 cột), col-lg-3 (4 cột) -->
+        <div class="card w-100">
+            <a href="{% url 'chitietsanpham' sp.id %}">
+                <img src="/media/{{ sp.image }}" class="card-img-top img-fluid" alt="{{ sp.product_name }}">
+            </a>
+            <div class="card-body text-center d-flex flex-column">
+                <p class="card-title">{{ sp.product_name }}</p>
+                <span class="price-red">{{ sp.price }} đ</span><br>
+                <button class="btn btn-sm btn-primary mt-auto update-cart" data-product="{{ sp.id }}" data-action="add">
+                    Thêm vào giỏ
+                </button>
+            </div>
         </div>
     </div>
-    
+    {% endfor %}
+    </div>
+    <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {% if related_products.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ related_products.previous_page_number }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">&laquo;</span>
+      </li>
+    {% endif %}
 
+    {% for num in related_products.paginator.page_range %}
+      {% if related_products.number == num %}
+        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+      {% endif %}
+    {% endfor %}
 
-<div class="mota">
-    <h2 class="header_mota">Mô tả sản phẩm</h2>
-    <p class="p_noidung">{{products.description}}</p>
+    {% if related_products.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ related_products.next_page_number }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">&raquo;</span>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
 </div>
-</div>
 
-
+</div></div>
 {% endblock %}
+
 {% block checkoutjs %}
 <!-- <script>
     $('#muangay-btn').on('click',function(){
         window.location.href = "{% url 'thongtinmuahang' %}"
-
     })
 </script> -->
 {% endblock %}

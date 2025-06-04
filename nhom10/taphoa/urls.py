@@ -15,13 +15,14 @@ urlpatterns = [
     path("thucphamanlien/",views.thucphamanlien,name="thucphamanlien"),
     path("douong/",views.douong,name="douong"),
     path("banhkeo/",views.banhkeo,name="banhkeo"),
-    path("rongbien/",views.rongbien,name="rongbien"),
+    path("sua/",views.sua,name="sua"),
+    path("thucphamkho/",views.thucphamkho,name="thucphamkho"),
 
     # path("kcook/chitietkcook/", views.chitietkcook, name="chitietkcook"),
     path("thongtinmuahang/", views.thongtinmh, name="thongtinmuahang"),
     path('chitietsanpham/<int:id>/', views.chitietsanpham, name='chitietsanpham'),
     path('search/', views.search, name='search'),
-    path('update_item/',views.updateItem,name="update_item"),
+    path('update_item/',views.update_item,name="update_item"),
     path('process_order/', views.processOrder, name="process_order"),
 
 

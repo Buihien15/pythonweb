@@ -1,4 +1,3 @@
-from itertools import product
 from multiprocessing import context
 from queue import PriorityQueue
 from sqlite3 import Cursor
@@ -82,48 +81,96 @@ def home(response):
 
     return render(response, "main/home.html",context)
 
-
-
-def thucphamanlien(response):
-    """render trang thực phẩm ăn liền, truyền vào data là Product với CategoryId=6 (vì id=6 là thực phẩm ăn liền)"""
-    cartdata=cartData(response)
+def thucphamkho(request):
+    cartdata = cartData(request)
     cartItems = cartdata['cartItems']
-    data = Product.objects.filter(cat_name=2)
-    return render(response, "main/thucphamanlien.html", {'data': data,'cartItems':cartItems})
 
+    products_list = Product.objects.filter(cat_name=5).order_by('id')  # cat_name=5 là thực phẩm khô
+    paginator = Paginator(products_list, 12)  # 12 sản phẩm mỗi trang
 
-def giavisot(response):
-    """render trang gia vị và sốt, truyền vào data là Product với CategoryId=2 (vì id=2 là gia vị và sốt)"""
-    cartdata=cartData(response)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "main/thucphamkho.html", {
+        'data': page_obj,
+        'cartItems': cartItems,
+    })
+
+def thucphamanlien(request):
+    cartdata = cartData(request)
     cartItems = cartdata['cartItems']
-    data = Product.objects.filter(cat_name=3)
-    return render(response, "main/giavisot.html", {'data': data,'cartItems':cartItems})
 
+    products_list = Product.objects.filter(cat_name=6).order_by('id')  # cat_name=6 là thực phẩm ăn liền
+    paginator = Paginator(products_list, 12)  # Hiển thị 12 sản phẩm mỗi trang
 
-def douong(response):
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "main/thucphamanlien.html", {
+        'data': page_obj,
+        'cartItems': cartItems,
+    })
+
+def giavisot(request):
+    cartdata = cartData(request)
+    cartItems = cartdata['cartItems']
+
+    products_list = Product.objects.filter(cat_name=3).order_by('id')
+    paginator = Paginator(products_list, 12)  # 12 sản phẩm mỗi trang
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "main/giavisot.html", {
+        'data': page_obj,
+        'cartItems': cartItems,
+    })
+
+def douong(request):
     """render trang đồ uống, truyền vào data là Product với CategoryId=4 (vì id=4 là đồ uống)"""
-    cartdata=cartData(response)
+    cartdata=cartData(request)
     cartItems = cartdata['cartItems']
-    data = Product.objects.filter(cat_name=1)
-    return render(response, "main/douong.html", {'data': data,'cartItems':cartItems})
+    products_list = Product.objects.filter(cat_name=1).order_by('id')
+    paginator = Paginator(products_list, 12)  # 12 sản phẩm mỗi trang
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, "main/douong.html", {
+        'data': page_obj,
+        'cartItems': cartItems,
+    })
+    
 
 
-def banhkeo(response):
+def banhkeo(request):
     """render trang bánh kẹo, truyền vào data là Product với CategoryId=1 (vì id=1 là bánh kẹo)"""
-    cartdata=cartData(response)
+    cartdata=cartData(request)
     cartItems = cartdata['cartItems']
-    data = Product.objects.filter(cat_name=6)
-    return render(response, "main/banhkeo.html", {'data': data,'cartItems':cartItems})
+    products_list = Product.objects.filter(cat_name=6).order_by('id')
+    paginator = Paginator(products_list, 12)  # 12 sản phẩm mỗi trang
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "main/banhkeo.html", {
+        'data': page_obj,
+        'cartItems': cartItems,
+    })
 
 
-def rongbien(response):
+def sua(request):
     """render trang rong biển, truyền vào data là Product với CategoryId=5 (vì id=5 là rong biển)"""
-    cartdata=cartData(response)
+    cartdata=cartData(request)
     cartItems = cartdata['cartItems']
+    products_list = Product.objects.filter(cat_name=2).order_by('id')
+    paginator = Paginator(products_list, 12)  # 12 sản phẩm mỗi trang
+    page_number = request.GET.get('page')
 
+    page_obj = paginator.get_page(page_number)
 
-    data = Product.objects.filter(cat_name=4)
-    return render(response, "main/rongbien.html", {'data': data,'cartItems':cartItems})
+    return render(request, "main/sua.html", {
+        'data': page_obj,
+        'cartItems': cartItems,
+    })
 
 
 
@@ -140,43 +187,62 @@ def search(request):
         return render(request, 'main/search.html', {'cartItems':cartItems})
 
 
-def updateItem(request):
-    """thực hiện chức năng cập nhật sản phẩm đối với người có tài khoản đăng nhập, ở đây chỉ là tài khoản admin quản lý database"""
-    data = json.loads(request.body)
-    productId = data['productId']
-    action = data['action']
-    print('Action:', action)
-    print('Product:', productId)
+from django.http import JsonResponse
+import json
 
-    customer = request.user.customer
-    product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(
-        customer=customer, complete=False)
+def update_item(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            productId = data.get('productId')
+            action = data.get('action')
+            print('productId:', productId, 'action:', action)
 
-    orderItem, created = OrderItem.objects.get_or_create(
-        order=order, product=product)
+            customer = request.user.customer
+            order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
+            product = Product.objects.get(id=productId)
+            orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
+            if action == 'add':
+                orderItem.quantity += 1
+            elif action == 'remove':
+                orderItem.quantity -= 1
 
-    orderItem.save()
+            if orderItem.quantity <= 0:
+                orderItem.delete()
+            else:
+                orderItem.save()
 
-    if orderItem.quantity <= 0:
-        orderItem.delete()
+            return JsonResponse({'status': 'success', 'message': 'Item updated'})
+        except Exception as e:
+            print('Error in update_item:', e)
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
-    return JsonResponse('Item was added', safe=False)
 
 def chitietsanpham(request, id):
-    cartdata = cartData(request)
+    # Lấy sản phẩm theo id
+    cartdata=cartData(request)
     cartItems = cartdata['cartItems']
+    product_obj = Product.objects.get(id=id)
 
-    product = get_object_or_404(Product, id=id)
-    context = {'products': product, 'cartItems': cartItems}
-    return render(request, 'main/chitietsanpham.html', context)
+    # Lấy sản phẩm liên quan (cùng category, loại trừ sản phẩm đang xem)
+    related_products_list = Product.objects.filter(
+        cat_name=product_obj.cat_name
+    ).exclude(id=product_obj.id).order_by('id')
 
+    paginator = Paginator(related_products_list, 4)  # 5 sản phẩm mỗi trang
+    page_number = request.GET.get('page')
+    related_products = paginator.get_page(page_number)
+
+    return render(request, 'main/chitietsanpham.html', {
+        'products': product_obj,
+        'related_products': related_products,
+        'cartItems': cartItems,
+    })
+    
 def giohang(request):
     """render trang giỏ hàng"""
     cartdata=cartData(request)

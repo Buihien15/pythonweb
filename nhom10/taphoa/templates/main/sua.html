@@ -1,19 +1,19 @@
-{% extends 'main/base.html' %} 
+{% extends 'main/base.html' %}
 {% load static %}
 
 {% block linkcss %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/thucphamanlien.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/rongbien.css' %}" />
 <link rel="stylesheet" href="{% static 'css/list_sp.css' %}" />
-{% endblock %} 
+{% endblock %}
 
-{% block title %} Thực phẩm ăn liền {% endblock %} 
+{% block title %} Sữa {% endblock %}
 
 {% block images %}
-<!-- Bạn có thể thêm banner hoặc ảnh ở đây nếu muốn -->
-{% endblock %} 
+<!-- Banner hoặc ảnh đại diện nếu cần -->
+{% endblock %}
 
 {% block sanpham %}
-<div class="anlien-page py-4">
+<div class="rongbien-page py-4">
   <div class="container">
     <div class="row">
 
@@ -28,8 +28,7 @@
             <li><a class="list-group-item" href="/thucphamkho/">Thực phẩm khô</a></li>
             <li><a class="list-group-item" href="/banhkeo/">Bánh kẹo</a></li>
             <li><a class="list-group-item" href="/douong/">Đồ uống</a></li>
-            <li><p style="color:blue;padding-left: 10px;padding-top: 10px;">Thực phẩm ăn liền</p></li> <!-- Active danh mục -->
-            <li><a class="list-group-item" href="/sua/">Sữa</a></li>
+            <li><p style="color:blue; padding-left: 10px; padding-top: 10px;">Sữa</p></li>
           </ul>
         </div>
       </div>
@@ -37,17 +36,17 @@
       <!-- Cột phải: Danh sách sản phẩm -->
       <div class="col-md-9">
         <div class="row justify-content-start">
-          <strong>Thực phẩm ăn liền</strong>
-          {% for anlien in data %}
+          <strong>Sữa</strong>
+          {% for sua in data %}
             <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
               <div class="card">
-                <img src="/media/{{ anlien.image }}" class="card-img-top" alt="{{ anlien.product_name }}" />
+                <img src="/media/{{ sua.image }}" class="card-img-top" alt="{{ sua.product_name }}" />
                 <div class="card-body text-center">
-                  <a href="{% url 'chitietsanpham' id=anlien.id %}">
-                    <h5 class="card-title">{{ anlien.product_name }}</h5>
-                    <p class="card-text">{{ anlien.price }} đ</p>
+                  <a href="{% url 'chitietsanpham' id=sua.id %}">
+                    <h5 class="card-title">{{ sua.product_name }}</h5>
+                    <p class="card-text">{{ sua.price }} đ</p>
                   </a>
-                  <button class="btn btn-primary update-cart" data-product="{{ anlien.id }}" data-action="add">
+                  <button class="btn btn-primary update-cart" data-product="{{ sua.id }}" data-action="add">
                     Thêm vào giỏ hàng
                   </button>
                 </div>
