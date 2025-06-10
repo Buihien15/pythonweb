@@ -1,0 +1,88 @@
+@font-face {
+    font-family: quicksand-light;
+    src: url(../font/Quicksand-Light.ttf);
+}
+
+@font-face {
+    font-family: quicksand;
+    src: url(../font/Quicksand-Regular.ttf);
+}
+
+@font-face {
+    font-family: quicksand-bold;
+    src: url(../font/Quicksand-Bold.ttf);
+}
+
+@font-face {
+    font-family: quicksand-medium;
+    src: url(../font/Quicksand-Medium.ttf);
+}
+
+@font-face {
+    font-family: reenie-beenie;
+    src: url(../font/ReenieBeanie-Regular.ttf);
+}
+
+.kcook-h2{
+    font-family:quicksand-bold;
+    color: #DC2E07;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.kcook-image img{
+   width: 500px;
+}
+/* .nguyenlieu, .cachlam{
+    padding-left: 50px;
+    padding-right: 60px;
+    padding-bottom: 40px;
+}
+.nguyenlieu h2,.cachlam h2{
+    font-family: quicksand-bold;
+    padding-top: 20px;
+    font-size: 25px;
+    padding-bottom:5px;
+} */
+/* .chitiet{
+    padding-left: 15px;
+    font-family: quicksand;
+    border: 1px solid black;
+} */
+/* .nguyenlieu pre{
+    border-radius: 10px;
+    font-size: 18px;
+}
+.cachlam pre{
+    border-radius: 10px;
+    font-size: 18px;
+
+} */
+
+.chitietkcook{
+    overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 100; /* number of lines to show */
+           line-clamp: 20; 
+   -webkit-box-orient: vertical;
+   border: 2px solid #000;
+   margin: 45px;
+   padding: 20px;
+   border-radius: 20px;
+   font-family: quicksand;
+   font-size: 25px;
+}
+.nguyenlieu h2,.cachlam h2{
+    font-family: quicksand-bold;
+    padding-top: 20px;
+    font-size: 35px;
+    margin-left: 10px;
+} 
+.navigate-kcook{
+    font-family: quicksand-bold;
+    color: #4A4646;
+    padding: 10px;
+}
+
+

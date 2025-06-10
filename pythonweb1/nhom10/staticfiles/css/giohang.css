@@ -1,0 +1,131 @@
+@font-face {
+    font-family: quicksand-light;
+    src: url(../font/Quicksand-Light.ttf);
+  }
+  @font-face {
+    font-family: quicksand;
+    src: url(../font/Quicksand-Regular.ttf);
+  }
+  @font-face {
+    font-family: quicksand-bold;
+    src: url(../font/Quicksand-Bold.ttf);
+  }
+  @font-face {
+    font-family: quicksand-medium;
+    src: url(../font/Quicksand-Medium.ttf);
+  }
+  @font-face {
+    font-family: reenie-beenie;
+    src: url(../font/ReenieBeanie-Regular.ttf);
+  }
+
+.giohang h1{
+    padding: 50px;
+    font-size: 40px;
+    font-family: quicksand-bold;
+}
+.giohang-detail .row{
+    font-family: quicksand;
+    font-size: 25px;
+    border-bottom: 1px solid #4A4646;
+    text-align: center;
+}
+
+.giohang-detail .row{
+    padding: 20px !important;
+}
+.giohang-detail .row-tongcong{
+    border-bottom: none ;
+    font-family: quicksand-bold;
+}
+.giohang-detail .row-tieude{
+font-family: quicksand-bold;
+}
+/* .giohang{
+    margin: 100px;
+} */
+.giohang .btn-thanhtoan{
+    font-family: quicksand-bold;
+    font-size: 30px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 20px;
+    margin: 30px;
+    border-color: #000;
+}
+/* .quantity{
+	display: inline-block;
+	font-weight: 700;
+	padding-right:10px;
+	
+
+}
+
+.chg-quantity{
+	width: 5px;
+	cursor: pointer;
+	display: block;
+	margin-top: 5px;
+	transition:.1s;
+} */
+
+.chg-quantity:hover{
+	opacity: .6;
+}
+.quantity img{
+  width: 5px;
+  /* height: 10px; */
+}
+
+.btn-success{
+  border-radius: 20px;
+  font-size: 30px;
+  color: #fff;
+  font-family: quicksand-bold;
+  background-color: #000;
+}
+.btn-success:hover{
+  background-color: #000;
+  
+}
+.cart-row{
+  font-family: quicksand;
+  font-size: 18px;
+	display: flex;
+    align-items: flex-stretch;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+
+}
+
+.quantity{
+	display: inline-block;
+	font-family: quicksand-bold;
+	
+	
+
+}
+
+.chg-quantity{
+	width: 12px;
+	cursor: pointer;
+	display: block;
+	margin-top: 5px;
+	transition:.1s;
+}
+
+.chg-quantity:hover{
+	opacity: .6;
+}
+
+
+.hidden{
+	display: none!important;
+}
+.row-image{
+	width: 100px;
+}
+.update-cart{
+  font-size: 18px;
+}

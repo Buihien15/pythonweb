@@ -1,0 +1,26 @@
+@font-face {
+    font-family: quicksand-light;
+    src: url(../font/Quicksand-Light.ttf);
+  }
+  @font-face {
+    font-family: quicksand;
+    src: url(../font/Quicksand-Regular.ttf);
+  }
+  @font-face {
+    font-family: quicksand-bold;
+    src: url(../font/Quicksand-Bold.ttf);
+  }
+  @font-face {
+    font-family: quicksand-medium;
+    src: url(../font/Quicksand-Medium.ttf);
+  }
+  @font-face {
+    font-family: reenie-beenie;
+    src: url(../font/ReenieBeanie-Regular.ttf);
+  }
+
+
+.card-title, .cart-text{
+    font-family: quicksand-bold;
+
+}

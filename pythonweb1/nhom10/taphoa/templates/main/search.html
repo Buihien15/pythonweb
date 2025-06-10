@@ -1,0 +1,71 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}" />
+
+{% endblock %}
+
+{% block title%} Tìm kiếm "{{searched}}" {% endblock %}
+
+<style>
+   @font-face {
+    font-family: quicksand-light;
+    src: url(../font/Quicksand-Light.ttf);
+  }
+  @font-face {
+    font-family: quicksand;
+    src: url(../font/Quicksand-Regular.ttf);
+  }
+  @font-face {
+    font-family: quicksand-bold;
+    src: url(../font/Quicksand-Bold.ttf);
+  }
+  @font-face {
+    font-family: quicksand-medium;
+    src: url(../font/Quicksand-Medium.ttf);
+  }
+  @font-face {
+    font-family: reenie-beenie;
+    src: url(../font/ReenieBeanie-Regular.ttf);
+  }
+</style>
+
+{% block tieude %}
+{% if searched %}
+
+  {% if product %}
+    <h3 class="container" style="font-size:20px;padding:15px;">
+      Đã tìm thấy {{ product|length }} sản phẩm cho từ khóa: "{{ searched }}"
+    </h3>
+    <br>
+    <div class="product-page">
+      <div class="container">
+        <div class="row product-page-row justify-content-center ">
+          {% for product in product %}
+          <div class="col-sm-3 col-md-3 product-col" style="max-width: 18rem">
+            <div class="card">
+              <img src="/media/{{product.image}}" class="card-img-top" alt="..." />
+              <div class="card-body text-center">
+                <a href="/chitietsanpham-list/{{product.slug}}" style="text-decoration: none; color: black">
+                  <h5 class="card-title" style="font-family: quicksand-bold;">{{product.product_name}}</h5>
+                  <p class="card-text" 
+                    style="color:red;font-size:30px; font-weight: bold; font-family: quicksand-bold;">{{product.price}}đ</p>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <h3 class="container" style="font-size:20px;padding:15px;">
+      Không tìm thấy sản phẩm nào cho từ khóa: "{{ searched }}"
+    </h3>
+  {% endif %}
+
+{% else %}
+  <h3 class="container" style="font-size:20px;padding:15px;">Vui lòng nhập từ khóa tìm kiếm</h3>
+{% endif %}
+{% endblock %}
