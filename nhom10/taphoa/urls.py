@@ -8,6 +8,7 @@ urlpatterns = [
     path("",views.home,name="home"),
     path("home/",views.home,name="home"),
     path("giohang/",views.giohang,name="giohang"),
+    path("lienhe/",  views.lienhe, name="lienhe"),
 
     path("giavisot/",views.giavisot,name="giavisot"),
 
@@ -24,7 +25,8 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('update_item/',views.update_item,name="update_item"),
     path('process_order/', views.processOrder, name="process_order"),
-
+    path('tin-tuc/', views.news_list, name='news_list'),
+    path('tin-tuc/<int:pk>/', views.news_detail, name='news_detail'),
 
 ]
  

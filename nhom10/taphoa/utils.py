@@ -45,16 +45,10 @@ def cookieCart(request):
 def cartData(request):
     """Return dữ liệu lấy được từ cookie (người không đăng nhập) trả về cho views.py"""
     if request.user.is_authenticated:
-        try:
-            customer = request.user.customer
-            order, created = Order.objects.get_or_create(customer=customer, complete=False)
-            items = order.orderitem_set.all()
-            cartItems = order.get_cart_items
-        except Customer.DoesNotExist:
-            # User không có Customer => giỏ rỗng
-            items = []
-            order = {'get_cart_total': 0, 'get_cart_items': 0}
-            cartItems = 0
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
     else:
         cookieData = cookieCart(request)
         cartItems = cookieData['cartItems']

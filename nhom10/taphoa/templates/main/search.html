@@ -3,6 +3,8 @@
 
 {% block linkcss %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}" />
+<link rel="stylesheet" href="{% static 'css/list_sp.css' %}" />
+
 
 {% endblock %}
 
@@ -47,11 +49,12 @@
             <div class="card">
               <img src="/media/{{product.image}}" class="card-img-top" alt="..." />
               <div class="card-body text-center">
-                <a href="/chitietsanpham-list/{{product.slug}}" style="text-decoration: none; color: black">
+                <a href="{% url 'chitietsanpham' id=product.id %}" style="text-decoration: none; color: black">
                   <h5 class="card-title" style="font-family: quicksand-bold;">{{product.product_name}}</h5>
-                  <p class="card-text" 
-                    style="color:red;font-size:30px; font-weight: bold; font-family: quicksand-bold;">{{product.price}}đ</p>
+                  <p class="card-text" >{{product.price}}đ</p>
                 </a>
+               <button class="btn btn-primary update-cart" data-product="{{ product.id }}" data-action="add">Thêm vào giỏ hàng</button>
+
               </div>
             </div>
           </div>

@@ -1,15 +1,16 @@
 from multiprocessing import context
 from queue import PriorityQueue
 from sqlite3 import Cursor
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Customer, Product, Order, OrderItem,ShippingAddress
+from .models import Customer, Product, Order, OrderItem,ShippingAddress, News
 from django.http import JsonResponse
 import json
 from .utils import cookieCart,cartData,guestOrder
 import datetime
 from django.shortcuts import get_object_or_404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .forms import NewsSearchForm
 
 # def index(response,id):
 #     ls = ToDoList.objects.get(id = id)
@@ -65,7 +66,10 @@ def base(response):
     """render sườn chung dành cho các page"""
     return render(response, "main/base.html", {})
 
-
+def lienhe(response):
+    cartdata=cartData(response)
+    cartItems = cartdata['cartItems']
+    return render(response, "main/lienhe.html", {'cartItems': cartItems})
 def home(response):
     """render trang home, truyền vào data Product"""
     cartdata=cartData(response)
@@ -181,14 +185,11 @@ def search(request):
 
     if request.method == "POST":
         searched = request.POST['searched']
-        product = Product.objects.filter(product_name__contains=searched)
+        product = Product.objects.filter(product_name__contains=searched).order_by('id')
         return render(request, 'main/search.html', {'searched': searched, 'product': product,'cartItems':cartItems})
     else:
         return render(request, 'main/search.html', {'cartItems':cartItems})
 
-
-from django.http import JsonResponse
-import json
 
 def update_item(request):
     if request.method == 'POST':
@@ -291,3 +292,32 @@ def processOrder(request):
             address = data['shipping']['address']
         )
     return JsonResponse('Payment submitted..', safe=False)
+
+
+
+def news_list(request):
+    cartdata=cartData(request)
+    cartItems = cartdata['cartItems']
+    loai = request.GET.get('loai')  # giá trị: 'khuyen_mai', 'thong_bao' hoặc None
+    # data = News.objects.all()
+    if loai in ['khuyen_mai', 'thong_bao']:
+        news_list = News.objects.filter(loai_tin=loai, trang_thai=True).order_by('-ngay_dang')
+    else:
+        news_list = News.objects.filter(trang_thai=True).order_by('-ngay_dang')
+
+    paginator = Paginator(news_list, 5)  # mỗi trang 5 tin
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'main/news_list.html', {
+        'page_obj': page_obj,
+        'loai': loai,
+        'cartItems': cartItems,
+    })
+
+def news_detail(request, pk):
+    cartdata=cartData(request)
+    cartItems = cartdata['cartItems']
+    news_item = get_object_or_404(News, pk=pk, trang_thai=True)
+    return render(request, 'main/news_detail.html', {'news_item': news_item,'cartItems': cartItems})
+

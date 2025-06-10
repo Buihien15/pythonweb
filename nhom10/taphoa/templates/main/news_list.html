@@ -1,0 +1,65 @@
+ {% extends 'main/base.html' %}
+{% load static %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{% static 'css/news_chung.css' %}">
+{% endblock %}
+
+{% block sanpham %}
+
+
+<div class="container mt-4">
+    <h2>
+        Tin tức - 
+        {% if loai == 'khuyen_mai' %}Khuyến mãi
+        {% elif loai == 'thong_bao' %}Thông báo
+        {% else %}Tất cả
+        {% endif %}
+    </h2>
+
+    <div class="filter-buttons mb-3">
+        <a href="{% url 'news_list' %}" class="btn btn-outline-secondary {% if not loai %}active{% endif %}">Tất cả</a>
+        <a href="?loai=khuyen_mai" class="btn btn-outline-secondary {% if loai == 'khuyen_mai' %}active{% endif %}">Khuyến mãi</a>
+        <a href="?loai=thong_bao" class="btn btn-outline-secondary {% if loai == 'thong_bao' %}active{% endif %}">Thông báo</a>
+    </div>
+
+    <div class="news-list">
+        {% for item in page_obj %}
+            <div class="news-item">
+                <a href="{% url 'news_detail' item.pk %}">
+                    <h5>{{ item.tieu_de }}</h5>
+                </a>
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.tieu_de }}" class="news-image"/>
+                {% endif %}
+                <p>{{ item.noi_dung|truncatewords:20 }}</p>
+                <small>Ngày đăng: {{ item.ngay_dang|date:"d/m/Y" }}</small>
+            </div>
+        {% empty %}
+            <p>Không có tin tức.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination justify-content-center mt-3">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% if loai %}loai={{ loai }}&{% endif %}page={{ page_obj.previous_page_number }}">Trước</a>
+                </li>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?{% if loai %}loai={{ loai }}&{% endif %}page={{ num }}">{{ num }}</a>
+                </li>
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?{% if loai %}loai={{ loai }}&{% endif %}page={{ page_obj.next_page_number }}">Sau</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+ .news-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 cột */
+    gap: 20px; /* khoảng cách giữa các tin */
+}
+
+.news-item {
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    text-align: left;
+    transition: transform 0.2s ease;
+}
+
+.news-item:hover {
+    transform: translateY(-5px);
+}
+
+.news-item h5 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.news-image {
+    width: 50%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.news-item p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.news-item small {
+    color: #888;
+}
