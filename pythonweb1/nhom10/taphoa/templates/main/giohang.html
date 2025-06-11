@@ -1,0 +1,54 @@
+{% extends 'main/base.html' %} 
+{% load static %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/giohang.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/giohang1.css' %}" />
+
+{% endblock %} 
+
+{% block title%}Giỏ hàng{% endblock %} 
+{% block secondnav %}{% endblock %}
+{% block sanpham %}
+<div class="giohang">
+    <h1 class="text-center">Giỏ hàng</h1>
+
+    <div class="box-element">
+      <div class="cart-row">
+        <div style="flex:1"></div>
+        <div style="flex:2"><strong></strong></div>
+        <div style="flex:1"><strong>Số lượng</strong></div>
+        <div style="flex:1"><strong>Đơn giá</strong></div>
+      </div>
+
+      {% for item in items %}
+      <div class="cart-row">
+        <div style="flex:1">
+          <img class="row-image" src="/media/{{item.product.image}}">
+        </div>
+        <div style="flex:2"><strong>{{item.product.product_name}}</strong></div>
+        <div style="flex:1">
+          <div class="quantity">
+            <i class="fa-solid fa-square-minus update-cart" data-product="{{item.product.id}}" data-action="remove"></i>
+            <p class="quantity-number">{{item.quantity}}</p>
+            <i class="fa-solid fa-square-plus update-cart" data-product="{{item.product.id}}" data-action="add"></i>
+          </div>
+        </div>
+        <div style="flex:1"><p>{{item.get_total}}</p></div>
+      </div>
+      {% endfor %}
+
+      <div class="cart-row">
+        <div style="flex:1"></div>
+        <div style="flex:1"></div>
+        <div style="flex:1"><strong>TỔNG: </strong></div>
+        <div style="flex:1" class="cart-items"><strong>{{order.get_cart_items}}</strong></div>
+        <div style="flex:1"><strong>{{order.get_cart_total}}</strong></div>
+      </div>
+    </div>
+    <div class="d-grid gap-2 col-5 ms-auto">
+      <a style="float:right; margin:5px;" class="btn btn-success" href="/thongtinmuahang/">Checkout</a>
+    </div>
+</div>
+
+{% endblock %}

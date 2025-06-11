@@ -1,0 +1,135 @@
+@font-face {
+    font-family: quicksand-light;
+    src: url(../font/Quicksand-Light.ttf);
+  }
+  @font-face {
+    font-family: quicksand;
+    src: url(../font/Quicksand-Regular.ttf);
+  }
+  @font-face {
+    font-family: quicksand-bold;
+    src: url(../font/Quicksand-Bold.ttf);
+  }
+  @font-face {
+    font-family: quicksand-medium;
+    src: url(../font/Quicksand-Medium.ttf);
+  }
+  @font-face {
+    font-family: reenie-beenie;
+    src: url(../font/ReenieBeanie-Regular.ttf);
+  }
+
+/* ----------------------------------- */
+.img-banner{
+    padding: 10px;
+    width: 1600px;
+}
+.home-title{
+  text-decoration: none;
+  font-family: quicksand-bold;
+  font-size: 40px;
+  color: #000;
+}
+.home-title:hover{
+  color: #000;
+}
+/* ---------------------------------- */
+
+.banchay-page h5{
+  font-size: 20px;
+  font-family: quicksand-bold;
+}
+
+.banchay-page a{
+  text-decoration: none;
+  color: #000;
+}
+
+.banchay-col{
+margin: 20px;
+padding: 0px;
+}
+
+/* ---------------------------------- */
+
+.giavisot-page h5{
+  font-size: 20px;
+  font-family: quicksand-bold;
+}
+
+.giavisot-page a{
+  text-decoration: none;
+  color: #000;
+}
+
+.giavisot-col{
+margin: 20px;
+padding: 0px;
+}
+
+/* ----------------------------------- */
+
+.banhkeo-page h5{
+  font-size: 20px;
+  font-family: quicksand-bold;
+}
+
+.banhkeo-page a{
+  text-decoration: none;
+  color: #000;
+}
+
+.banhkeo-col{
+margin: 20px;
+padding: 0px;
+}
+
+/* --------------------------------------- */
+.rongbien-page h5{
+  font-size: 20px;
+  font-family: quicksand-bold;
+}
+
+.rongbien-page a{
+  text-decoration: none;
+  color: #000;
+}
+
+.rongbien-col{
+margin: 20px;
+padding: 0px;
+}
+
+/* ---------------------------------------- */
+.douong-page h5{
+  font-size: 20px;
+  font-family: quicksand-bold;
+}
+
+.douong-page a{
+  text-decoration: none;
+  color: #000;
+}
+
+
+.douong-col{
+margin: 20px;
+padding: 0px;
+}
+
+/* ----------------------------------------- */
+
+.anlien-page h5{
+  font-size: 20px;
+  font-family: quicksand-bold;
+}
+
+.anlien-page a{
+  text-decoration: none;
+  color: #000;
+}
+
+.anlien-col{
+margin: 20px;
+padding: 0px;
+}

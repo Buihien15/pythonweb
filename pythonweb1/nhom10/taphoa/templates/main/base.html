@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>{% block title %}N10-Mart{% endblock %}</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/base2.css' %}" />
+  <link rel="icon" type="image/x-icon" href="{% static 'images/favicon-removebg-preview.png' %}" />
+
+  <!-- Bootstrap + FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Poppins:wght@700&family=Nunito:wght@700&display=swap" rel="stylesheet">
+  <style>
+      html {
+        scroll-behavior: smooth;
+      }
+  </style>
+
+  {% block linkcss %}{% endblock %}
+</head>
+
+<body style="background-color:#f9f9f9;">
+<div class="d-flex flex-column min-vh-100">
+
+  <!-- Navbar -->
+  <div style="position: sticky; top: 0; z-index: 1030; border-bottom: 1px solid #ccc; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);">
+    
+    <!-- Top navbar -->
+    <nav class="navbar navbar-expand-xxl navbar-dark navbar-first" style="background-color:#C8E6C9; padding:10px;">
+      <div class="container d-flex justify-content-between align-items-center">
+        <a href="/home/" class="logo_nhom">N10-Mart</a>
+
+        <form class="search-form d-flex" method="POST" action="{% url 'search' %}">
+          {% csrf_token %}
+          <input class="search-box" type="search" placeholder="Tìm kiếm sản phẩm..." name="searched" id="searched">
+          <button class="btn-search ms-2">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
+
+        <div class="navbar-cart d-flex align-items-center">
+          <a href="/giohang/" class="cart-items me-3">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-count">Giỏ hàng ({{cartItems}})</span>
+          </a>
+           {% comment %} {% if user.is_authenticated %}
+            <div class="dropdown">
+              <button class="btn dropdown-toggle login-icon" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-user"></i> <span class="login-text">{{ user.username }}</span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Đăng xuất</a></li>
+              </ul>
+            </div>
+          {% else %}
+            <a href="{% url 'login' %}" class="login-icon me-2" title="Đăng nhập">
+              <i class="fa-solid fa-user"></i> <span class="login-text">Đăng nhập</span>
+            </a>
+            <a href="{% url 'register' %}" class="login-icon" title="Đăng ký">
+              <i class="fa-solid fa-user-plus"></i> <span class="login-text">Đăng ký</span>
+            </a>
+          {% endif %} {% endcomment %}
+          <div class="dropdown">
+            <button class="btn dropdown-toggle login-icon" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-user"></i>
+              <span class="login-text">Tài khoản</span>
+            </button>
+          
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              {% if user.is_authenticated %}
+                <li>
+                  <span class="dropdown-item-text">
+                    <i class="fa-solid fa-circle-user me-2 text-secondary"></i> Xin chào, <strong>{{ user.username }}</strong>
+                  </span>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'logout' %}">
+                    <i class="fa-solid fa-right-from-bracket me-2 "></i> Đăng xuất
+                  </a>
+                </li>
+              {% else %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'login' %}">
+                    <i class="fa-solid fa-right-to-bracket me-2 "></i> Đăng nhập
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'register' %}">
+                    <i class="fa-solid fa-user-plus me-2 "></i> Đăng ký
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          {% comment %} </div>
+          <a href="/dangnhap/" class="login-icon" title="Đăng nhập">
+            <i class="fa-solid fa-user"></i> <span class="login-text">Đăng nhập</span>
+          </a>
+        </div> {% endcomment %}
+      </div>
+    </nav>
+
+    <!-- Danh mục -->
+    <nav class="navbar navbar-expand-xxl navbar-light bg-white" style="height: 35px;">
+      <div class="container">
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i> Danh mục
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="menuDropdown">
+            <li><a class="dropdown-item" href="/giavisot/">Gia vị</a></li>
+            <li><a class="dropdown-item" href="/thucphamkho/">Thực phẩm khô</a></li>
+            <li><a class="dropdown-item" href="/banhkeo/">Bánh kẹo</a></li>
+            <li><a class="dropdown-item" href="/douong/">Đồ uống</a></li>
+            <li><a class="dropdown-item" href="/thucphamanlien/">Thực phẩm ăn liền</a></li>
+            <li><a class="dropdown-item" href="/sua/">Sữa</a></li>
+          </ul>
+        </div>
+
+        <div class="navbar-cart d-flex align-items-center">
+          <a href="/giohang/" class="cart-items me-3" style="padding-top:12px">
+            <i class="fa-regular fa-newspaper me-1"></i> <span class="cart-count">Tin Tức</span>
+          </a>
+          <a href="/dangnhap/" class="login-icon" title="Liên hệ" style="padding-top:12px">
+            <i class="fa-solid fa-comments"></i> <span class="login-text">Liên hệ</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Nội dung từ các block -->
+  {% block tieude %}{% endblock %}
+  {% block images %}{% endblock %}
+  {% block sanpham %}{% endblock %}
+  {% block content %}{% endblock %}
+   {% block linkjs %}
+  <script type="text/javascript">
+    var counter =1;
+    setInterval(function(){
+      document.getElementById('radio'+counter).checked = true;
+      counter++;
+      if(counter > 5){
+        counter = 1;
+
+      }
+    },3500);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{% static 'js/cart.js' %}"> </script>  
+  <script type="text/javascript">
+		var user = '{{request.user}}'
+
+		function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken')
+
+		function getCookie(name) {
+		    // Split cookie string and get all individual name=value pairs in an array
+		    var cookieArr = document.cookie.split(";");
+
+		    // Loop through the array elements
+		    for(var i = 0; i < cookieArr.length; i++) {
+		        var cookiePair = cookieArr[i].split("=");
+
+		        /* Removing whitespace at the beginning of the cookie name
+		        and compare it with the given string */
+		        if(name == cookiePair[0].trim()) {
+		            // Decode the cookie value and return
+		            return decodeURIComponent(cookiePair[1]);
+		        }
+		    }
+
+		    // Return null if not found
+		    return null;
+		}
+		var cart = JSON.parse(getCookie('cart'))
+
+		if (cart == undefined){
+			cart = {}
+			console.log('Cart Created!', cart)
+			document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+		}
+		console.log('Cart:', cart)
+	
+	</script>
+
+<script type="text/javascript">
+  (function(d, m){
+      var kommunicateSettings = 
+          {"appId":"26918e1e9316d8dda926afda4ccfb7b4a","popupWidget":true,"automaticChatOpenOnNavigation":true};
+      var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+      s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+      var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
+      window.kommunicate = m; m._globals = kommunicateSettings;
+  })(document, window.kommunicate || {});
+/* NOTE : Use web server to view HTML files as real-time update will not work if you directly open the HTML file in the browser. */
+</script>
+
+  {% endblock %}
+
+
+  <!-- Footer -->
+  {% block footer %}
+  <footer class="footer py-3 mt-auto" style="background-color: #C8E6C9">
+    <div class="container text-center">
+      <img src="{% static 'images/footer-icon.png' %}" alt="Logo nhóm" class="d-inline-block align-text-top">
+      <h5>Nhóm 10</h5>
+    </div>
+  </footer>
+  {% endblock %}
+  {% block checkoutjs %}
+  {% endblock %}
+  
+</div>
+</body>
+</html>
