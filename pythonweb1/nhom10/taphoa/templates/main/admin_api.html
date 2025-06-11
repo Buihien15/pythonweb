@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin API Panel</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <style>
+        .sidebar {
+            height: 100vh;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px 20px;
+            color: #000;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #dee2e6;
+        }
+        td[contenteditable="true"] {
+            background-color: #fff8dc;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar">
+            <h5 class="text-center">Bảng dữ liệu</h5>
+            {% for endpoint in endpoints %}
+                <a href="?endpoint={{ endpoint }}">{{ endpoint|capfirst }}</a>
+            {% endfor %}
+        </div>
+
+        <!-- Main content -->
+        <div class="col-md-10 p-3">
+            <h3>Quản lý API: {{ selected_endpoint|default:"Chọn bảng" }}</h3>
+
+            {% if selected_endpoint %}
+            <form method="POST" action="{% url 'admin_api' %}" class="row g-2">
+                {% csrf_token %}
+                <input type="hidden" name="endpoint" value="{{ selected_endpoint }}">
+                <input type="hidden" name="method" value="POST">
+                {% if result and result.0 %}
+                    {% for key in result.0.keys %}
+                        {% if key != 'id' %}
+                        <div class="col-md-3">
+                            <label class="form-label">{{ key }}</label>
+                            <input type="text" name="{{ key }}" class="form-control">
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success mt-2">+ Thêm bản ghi</button>
+                </div>
+            </form>
+            {% endif %}
+
+            {% if result %}
+                <hr>
+                <h5>Kết quả (Status: {{ status_code }})</h5>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            {% for key in result.0 %}
+                                <th>{{ key }}</th>
+                            {% endfor %}
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in result %}
+                            <tr data-id="{{ row.id }}">
+                                {% for key, value in row.items %}
+                                    {% if key == 'id' %}
+                                        <td>{{ value }}</td>
+                                    {% else %}
+                                        <td contenteditable="true" data-key="{{ key }}">{{ value }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                                <td>
+                                    <button class="btn btn-warning btn-sm" onclick="saveRow(this)">Lưu</button>
+                                    <form method="POST" action="{% url 'admin_api' %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="endpoint" value="{{ selected_endpoint }}">
+                                        <input type="hidden" name="method" value="DELETE">
+                                        <input type="hidden" name="pk" value="{{ row.id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xoá?')">Xoá</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+function saveRow(button) {
+    const row = button.closest('tr');
+    const id = row.dataset.id;
+    const endpoint = "{{ selected_endpoint }}";
+    const data = {};
+
+    row.querySelectorAll('td[contenteditable=true]').forEach(td => {
+        const key = td.dataset.key;
+        const value = td.textContent.trim();
+
+        // Bỏ các field không nên sửa
+        if (['id', 'created_at', 'updated_at'].includes(key)) return;
+
+        data[key] = value;
+    });
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '{% url "admin_api" %}';
+
+    const csrf = document.createElement('input');
+    csrf.name = 'csrfmiddlewaretoken';
+    csrf.value = '{{ csrf_token }}';
+    form.appendChild(csrf);
+
+    form.innerHTML += `<input type="hidden" name="endpoint" value="${endpoint}">`;
+    form.innerHTML += `<input type="hidden" name="method" value="PUT">`;
+    form.innerHTML += `<input type="hidden" name="pk" value="${id}">`;
+    form.innerHTML += `<input type="hidden" name="data" value='${JSON.stringify(data)}'>`;
+
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>
+
+</body>
+</html>

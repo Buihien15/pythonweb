@@ -160,21 +160,8 @@ border-radius: 20px;
   width: 60px;
   height: 60px;
 }
-.form-control, .search-btn{
-  height: 40px;
-  padding-left: 20px;
-  border: 0.5px solid rgb(184, 184, 184) !important;
- 
-}
 .form-control{
   margin-left: 5px;
-}
-.search-btn{
-  width: auto;
-  background-color: white !important;
-}
-.search-btn:hover{
-  background-color: #FFD63F !important;
 }
 .navbar-cart a{
   color: black !important;
@@ -194,10 +181,6 @@ border-radius: 20px;
 /* .navbar-toggler{
   border: 1px solid #000 !important;
 } */
-.search-box{
-  border-radius: 20px !important;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-}
 .card:hover{
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.25);
   transition: 0.8s ease-in-out;
@@ -216,7 +199,6 @@ border-radius: 20px;
   font-family: quicksand-bold;
   
 }
-
 /*----------------------------------SLIDER---------------------------------*/
 .slider{
   margin-top: 10px;

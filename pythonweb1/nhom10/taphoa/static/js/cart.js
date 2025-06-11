@@ -20,35 +20,22 @@ for (i = 0; i < updateBtns.length; i++) {
 function updateUserOrder(productId, action){
 	console.log('User is authenticated, sending data...')
 
-	var url = '/update_item/'
+		var url = '/update_item/'
 
-	fetch(url, {
-		method:'POST',
-		headers:{
-			'Content-Type':'application/json',
-			'X-CSRFToken':csrftoken,
-		}, 
-		body:JSON.stringify({'productId':productId, 'action':action})
-	})
-	.then(response => {
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
-		}
-		return response.json();
-	})
-	.then(data => {
-    console.log('Response data:', data);
-		if(data.status === 'success'){
-			// Bạn có thể reload trang hoặc cập nhật UI động tại đây
-			location.reload();
-		} else {
-			alert('Cập nhật giỏ hàng thất bại!');
-		}
-	})
-	.catch(error => {
-		console.error('Lỗi:', error);
-		alert('Lỗi khi cập nhật giỏ hàng!');
-	});
+		fetch(url, {
+			method:'POST',
+			headers:{
+				'Content-Type':'application/json',
+				'X-CSRFToken':csrftoken,
+			}, 
+			body:JSON.stringify({'productId':productId, 'action':action})
+		})
+		.then((response) => {
+		   return response.json();
+		})
+		.then((data) => {
+		    location.reload()
+		});
 }
 
 function addCookieItem(productId, action){
@@ -74,15 +61,5 @@ function addCookieItem(productId, action){
 	console.log('CART:', cart)
 	document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
 	
-	updateCartCount();
-}
-function updateCartCount() {
-	let cartItems = 0;
-	for (let key in cart) {
-		cartItems += cart[key].quantity;
-	}
-	let cartCountSpan = document.querySelector('.cart-count');
-	if (cartCountSpan) {
-		cartCountSpan.innerText = `Giỏ hàng (${cartItems})`;
-	}
+	location.reload()
 }

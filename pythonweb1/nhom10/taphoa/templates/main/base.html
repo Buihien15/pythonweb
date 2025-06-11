@@ -22,6 +22,147 @@
       html {
         scroll-behavior: smooth;
       }
+      /* Tắt viền sáng và hiệu ứng focus/active cho nút đăng nhập và danh mục */
+      .btn.dropdown-toggle:focus,
+      .btn.dropdown-toggle:active,
+      .btn.dropdown-toggle:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
+      }
+      /* CSS cho search form */
+      .search-form {
+        display: flex;
+        align-items: center;
+        border-radius: 30px;
+        background-color: white;
+      }
+      .search-box {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-family: Quicksand, sans-serif;
+        border: none;
+        width: 500px;
+        outline: none;
+        border-radius: 30px 0 0 30px;
+        background: white;
+        box-shadow: none;
+      }
+      .btn-search {
+        background: transparent;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        padding: 10px 15px;
+        border-radius: 0 30px 30px 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-search svg {
+        width: 22px;
+        height: 22px;
+        stroke: #333;
+      }
+      .navbar-cart {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 10px;
+      }
+      .cart-items, .login-icon {
+        position: relative;
+        font-family: Quicksand, sans-serif;
+        font-weight: bold;
+        font-size: 18px;
+        color: #333 !important;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        transition: color 0.3s ease;
+      }
+      .cart-items i {
+        font-size: 24px;
+        margin-right: 8px;
+        color: #000;
+        transition: transform 0.2s ease;
+      }
+      .cart-count, .login-text {
+        font-size: 13px;
+        font-weight: bold;
+      }
+      /* Hover effect */
+      .cart-items:hover i {
+        transform: scale(1.1);
+        color: #007bff;
+      }
+      .cart-items:hover {
+        color: #007bff !important;
+      }
+      .logo_nhom {
+        font-family: 'Quicksand', sans-serif;
+        font-size: 30px;
+        font-weight: 600;
+        color: #1f5622;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: default;
+        transition: color 0.3s ease;
+        text-decoration: none;
+      }
+      .logo_nhom:hover {
+        color: #388E3C;
+        cursor: pointer;
+      }
+      .login-icon i {
+        color: black;
+        font-size: 22px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      .login-icon {
+        margin-left: 20px;
+        cursor: pointer;
+      }
+      .login-icon:hover i {
+        transform: scale(1.1);
+        color: #007bff;
+      }
+      .login-icon:hover {
+        color: #007bff !important;
+      }
+      .navbar-nav .nav-link {
+        font-size: 14px;
+        line-height: 0.5px;
+      }
+      /* CSS cho dropdown menu */
+      .dropdown-menu {
+        background-color: #fff;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        min-width: 200px;
+      }
+      .dropdown-item, .dropdown-item-text  {
+        font-family: Quicksand, sans-serif;
+        font-size: 16px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: background-color 0.2s ease, color 0.2s ease;
+      }
+      .dropdown-item a{
+        text-decoration: none;
+
+      }
+      .dropdown-item i, .dropdown-item-text i {
+        font-size: 16px;
+        margin-right: 10px;
+        color: #1f5622;
+      }
+
   </style>
 
   {% block linkcss %}{% endblock %}
@@ -47,27 +188,10 @@
         </form>
 
         <div class="navbar-cart d-flex align-items-center">
-          <a href="/giohang/" class="cart-items me-3">
+          <a href="{% url 'giohang' %}" class="cart-items me-3">
             <i class="fa-solid fa-cart-shopping"></i>
             <span class="cart-count">Giỏ hàng ({{cartItems}})</span>
           </a>
-           {% comment %} {% if user.is_authenticated %}
-            <div class="dropdown">
-              <button class="btn dropdown-toggle login-icon" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-user"></i> <span class="login-text">{{ user.username }}</span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Đăng xuất</a></li>
-              </ul>
-            </div>
-          {% else %}
-            <a href="{% url 'login' %}" class="login-icon me-2" title="Đăng nhập">
-              <i class="fa-solid fa-user"></i> <span class="login-text">Đăng nhập</span>
-            </a>
-            <a href="{% url 'register' %}" class="login-icon" title="Đăng ký">
-              <i class="fa-solid fa-user-plus"></i> <span class="login-text">Đăng ký</span>
-            </a>
-          {% endif %} {% endcomment %}
           <div class="dropdown">
             <button class="btn dropdown-toggle login-icon" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa-solid fa-user"></i>
@@ -76,35 +200,29 @@
           
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               {% if user.is_authenticated %}
-                <li>
-                  <span class="dropdown-item-text">
-                    <i class="fa-solid fa-circle-user me-2 text-secondary"></i> Xin chào, <strong>{{ user.username }}</strong>
-                  </span>
-                </li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                  <a class="dropdown-item" href="{% url 'logout' %}">
-                    <i class="fa-solid fa-right-from-bracket me-2 "></i> Đăng xuất
+                <li class="dropdown-item">
+                  <a >
+                    <i class="fa-solid fa-circle-user me-1"></i>
+                    <span class="login-text" >Xin chào <span style="color:red">{{user.username}}</span></span>
                   </a>
                 </li>
+                <li></li>
+                <li class="dropdown-item">
+                  <a  href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt me-1"></i>  <span class="login-text">Đăng xuất</span></a>
+                </li>
+                 <li class="dropdown-item"><a href="{% url 'order_history' %}"><span class="login-text">Lịch sử đơn hàng</span></a></li>
               {% else %}
-                <li>
-                  <a class="dropdown-item" href="{% url 'login' %}">
-                    <i class="fa-solid fa-right-to-bracket me-2 "></i> Đăng nhập
-                  </a>
+                <li class="dropdown-item">
+                  <a  href="{% url 'login' %}"><i class="fa-solid fa-sign-in-alt me-1"></i> <span class="login-text">Đăng nhập</span> </a>
                 </li>
-                <li>
-                  <a class="dropdown-item" href="{% url 'register' %}">
-                    <i class="fa-solid fa-user-plus me-2 "></i> Đăng ký
-                  </a>
+                <li class="dropdown-item">
+                  <a  href="{% url 'register' %}"><i class="fa-solid fa-user-plus me-1"></i> <span class="login-text">Đăng ký</span> </a>
                 </li>
               {% endif %}
+             
             </ul>
-          {% comment %} </div>
-          <a href="/dangnhap/" class="login-icon" title="Đăng nhập">
-            <i class="fa-solid fa-user"></i> <span class="login-text">Đăng nhập</span>
-          </a>
-        </div> {% endcomment %}
+          
+          </div>
       </div>
     </nav>
 
@@ -126,12 +244,13 @@
         </div>
 
         <div class="navbar-cart d-flex align-items-center">
-          <a href="/giohang/" class="cart-items me-3" style="padding-top:12px">
+         <a href="{% url 'news_list' %}" class="cart-items me-3" style="padding-top:12px">
             <i class="fa-regular fa-newspaper me-1"></i> <span class="cart-count">Tin Tức</span>
           </a>
-          <a href="/dangnhap/" class="login-icon" title="Liên hệ" style="padding-top:12px">
-            <i class="fa-solid fa-comments"></i> <span class="login-text">Liên hệ</span>
-          </a>
+            <a href="{% url 'lienhe' %}" class="login-icon contact-tooltip" style="padding-top:12px">
+              <i class="fa-solid fa-comments"></i>
+              <span class="login-text">Liên hệ</span>
+            </a>
         </div>
       </div>
     </nav>
@@ -150,7 +269,6 @@
       counter++;
       if(counter > 5){
         counter = 1;
-
       }
     },3500);
   </script>
@@ -205,7 +323,6 @@
 			document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
 		}
 		console.log('Cart:', cart)
-	
 	</script>
 
 <script type="text/javascript">
@@ -217,11 +334,9 @@
       var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
       window.kommunicate = m; m._globals = kommunicateSettings;
   })(document, window.kommunicate || {});
-/* NOTE : Use web server to view HTML files as real-time update will not work if you directly open the HTML file in the browser. */
 </script>
 
   {% endblock %}
-
 
   <!-- Footer -->
   {% block footer %}

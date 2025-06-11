@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load format_filters %}
+{% block title %}Lịch sử đơn hàng{% endblock %}
+
+{% block sanpham %}
+<div class="container mt-5">
+  <h2 class="mb-4">Lịch sử đơn hàng</h2>
+
+  {% if order_data %}
+    {% for entry in order_data %}
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <strong>Đơn hàng #{{ entry.order.id }}</strong> – {{ entry.order.date_ordered|date:"d/m/Y H:i" }}
+        </div>
+        <div class="card-body">
+          <p><strong>Trạng thái:</strong> 
+            {% if entry.order.complete == "hoan_thanh" %}
+              Hoàn thành
+            {% else %}
+              Đang xử lý
+            {% endif %}
+          </p>
+          <p><strong>Địa chỉ giao hàng:</strong> {{ entry.address.address|default:"(Chưa có)" }}</p>
+          <p><strong>Phương thức thanh toán:</strong>
+            {% if entry.payment %}
+              {{ entry.payment.payment_method|capfirst }}
+            {% else %}
+              (Chưa thanh toán)
+            {% endif %}
+          </p>
+      
+          <p><strong>Tổng tiền:</strong> {{ entry.order.get_cart_total|floatformat:"0"|add:""  }}₫</p>
+
+          <h5 class="mt-3">Sản phẩm:</h5>
+          <ul>
+            {% for item in entry.items %}
+              <li>
+                {{ item.product.product_name }} - SL: {{ item.quantity }} - 
+                Đơn giá: {{ item.product.price|floatformat:"0" }}₫
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info">Bạn chưa có đơn hàng nào.</div>
+  {% endif %}
+</div>
+{% endblock %}

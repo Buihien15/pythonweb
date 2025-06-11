@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 #from . models import News, Categories, Product, Customer, Order, OrderItem, Review, ShippingAddress, Payment 
 # Register your models here.
-
+from django.utils.html import format_html
 from .models import *
 from .resources import (
     CategoriesResource, ProductResource, CustomerResource, OrderResource, OrderItemResource,
@@ -27,6 +27,9 @@ class ProductAdmin(ImportExportModelAdmin):
 
 class CustomerAdmin(ImportExportModelAdmin):
     resource_class = CustomerResource
+    list_display = ('user', 'name', 'phone', 'address') # Các cột hiển thị trong danh sách Admin
+    list_filter = ('name', 'phone', 'address',) # Lọc theo danh mục
+    search_fields = ('address',)
 
 class OrderAdmin(ImportExportModelAdmin):
     resource_class = OrderResource
@@ -34,14 +37,27 @@ class OrderAdmin(ImportExportModelAdmin):
 class OrderItemAdmin(ImportExportModelAdmin):
     resource_class = OrderItemResource
 
-class NewsAdmin(ImportExportModelAdmin):
-    resource_class = NewsResource
+class NewsAdmin(ImportExportModelAdmin): # Kế thừa từ ImportExportModelAdmin
+    resource_class = NewsResource # Gán resource class
+    list_display = ('tieu_de', 'loai_tin', 'ngay_dang', 'trang_thai', 'anh')
+    list_filter = ('loai_tin', 'trang_thai', 'ngay_dang')
+    search_fields = ('tieu_de', 'noi_dung')
+    date_hierarchy = 'ngay_dang' # Cho phép lọc theo ngày
+    def anh(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="80" height="auto" />', obj.image.url)
+        return "Không có ảnh"
+    
+    anh.short_description = 'Anh'
 
 class ReviewAdmin(ImportExportModelAdmin):
     resource_class = ReviewResource
 
 class ShippingAddressAdmin(ImportExportModelAdmin):
     resource_class = ShippingAddressResource
+    list_display = ( 'order', 'customer', 'address', 'date_added')
+    list_filter = ('customer', 'date_added')
+    search_fields = ('address', )
 
 class PaymentAdmin(ImportExportModelAdmin):
     resource_class = PaymentResource
@@ -82,6 +98,7 @@ admin.site.register(Review, ReviewAdmin)
 admin.site.register(ShippingAddress, ShippingAddressAdmin)
 admin.site.register(Payment, PaymentAdmin)
 admin.site.register(CartItem, CartItemAdmin)
+admin.site.register(StoreReview)
 
 
 

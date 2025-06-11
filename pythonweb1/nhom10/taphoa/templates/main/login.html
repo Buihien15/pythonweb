@@ -1,89 +1,142 @@
-{% extends 'main/base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập - N10-Mart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="text-center mb-0">Đăng Nhập</h3>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <style>
+    body {
+        background: linear-gradient(to right, #e0f7fa, #e8f5e9);
+        font-family: 'Quicksand', sans-serif;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    /* Soft decoration circles */
+    body::before, body::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        z-index: 0;
+        opacity: 0.2;
+    }
+
+    body::before {
+        width: 400px;
+        height: 400px;
+        top: -100px;
+        left: -100px;
+        background: radial-gradient(circle, #a5d6a7, #81c784);
+    }
+
+    body::after {
+        width: 300px;
+        height: 300px;
+        bottom: -80px;
+        right: -80px;
+        background: radial-gradient(circle, #80deea, #4dd0e1);
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .card {
+        border-radius: 18px;
+        box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+        background: rgba(255,255,255,0.95);
+    }
+
+    .card-header {
+        background: linear-gradient(to right, #43a047, #66bb6a);
+        color: white;
+        border-radius: 18px 18px 0 0;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .logo {
+        font-size: 26px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .logo i {
+        margin-right: 10px;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 12px;
+    }
+
+    .btn-primary {
+        background: #43a047;
+        border: none;
+        border-radius: 12px;
+        padding: 12px;
+        font-weight: bold;
+    }
+
+    .btn-primary:hover {
+        background: #388e3c;
+    }
+
+    .text-center a {
+        text-decoration: none;
+        font-weight: 600;
+    }
+</style>
+
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header py-3">
+                    <a href="{% url 'home' %}" class="logo" style="font-size: 24px; font-weight: 600; text-decoration: none; color:white;">
+                    <i class="fa-solid fa-house-chimney me-2"></i> N10-Mart
+                    </a>
+                    <h4 class="mt-2 mb-0">Đăng nhập tài khoản</h4>
                 </div>
                 <div class="card-body">
                     {% if messages %}
                         {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">
-                                {{ message }}
-                            </div>
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
                         {% endfor %}
                     {% endif %}
-                    
-                    <form method="POST">
+
+                    <form method="POST" autocomplete="off">
                         {% csrf_token %}
+                        <input type="text" name="fakeuser" style="display:none">
+                        <input type="password" name="fakepass" style="display:none">
                         {% for field in form %}
-                            <div class="form-group mb-3">
-                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                                {{ field.errors }}
+                            <div class="mb-3">
+                                <label class="form-label">{{ field.label }}</label>
                                 {{ field }}
-                                {% if field.help_text %}
-                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors }}</div>
                                 {% endif %}
                             </div>
                         {% endfor %}
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Đăng Nhập</button>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Đăng nhập</button>
                         </div>
                     </form>
                     <div class="text-center mt-3">
-                        <p>Chưa có tài khoản? <a href="{% url 'register' %}" class="text-primary">Đăng ký tại đây</a></p>
+                        <span>Chưa có tài khoản? <a href="{% url 'register' %}" class="text-decoration-none text-primary">Đăng ký</a></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<style>
-    .card-body{
-        font-size: 20px;
-     }
-    .form-control {
-        border-radius: 5px;
-        padding: 10px;
-        border: 1px solid #ced4da;
-    }
-    .form-control:focus {
-        border-color: #80bdff;
-        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-    }
-    .card {
-        border: none;
-        border-radius: 10px;
-    }
-    .card-header {
-        border-radius: 10px 10px 0 0 !important;
-    }
-    .btn-primary {
-        padding: 10px;
-        font-weight: 500;
-    }
-    .alert {
-        border-radius: 5px;
-    }
-    .alert {
-        border-radius: 8px;
-        font-family: 'Quicksand', sans-serif;
-        font-size: 1.25rem;
-        padding: 12px 15px;
-        margin-bottom: 15px;
-        text-align: center; /* Căn giữa thông báo */
-        font-weight: 600; /* In đậm thông báo */
-        color: #dc3545; /* Màu đỏ cho lỗi */
-        background-color: #f8d7da; /* Nền nhẹ cho lỗi */
-        border: 1px solid #f5c6cb; /* Viền nhẹ cho lỗi */
-        border-radius: 5px; /* Bo góc cho vùng lỗi */
-        padding: 8px 12px;
-    }
-   
-</style>
-{% endblock %} 
+</body>
+</html>

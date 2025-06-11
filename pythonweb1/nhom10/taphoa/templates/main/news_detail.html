@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block linkcss %}
+<link rel="stylesheet" href="{% static 'css/news_chung.css' %}">
+{% endblock %}
+
+{% block title %}{{ news_item.tieu_de }}{% endblock %}
+
+{% block sanpham %}
+<div class="container mt-4">
+    {% if news_item.image %}
+        <img src="{{ news_item.image.url }}" class="img-fluid mb-3" alt="{{ news_item.tieu_de }}">
+    {% endif %}
+    <p>{{ news_item.noi_dung|linebreaks }}</p>
+</div>
+{% endblock %}

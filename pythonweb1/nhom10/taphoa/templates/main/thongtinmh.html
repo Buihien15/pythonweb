@@ -4,47 +4,42 @@
 {% block linkcss %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/thongtinmh.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/thongtinmh1.css' %}" />
-
 {% endblock %} 
-{% block secondnav %} {% endblock %}
 
-{% block title%} Thông tin mua hàng {% endblock %} 
+{% block secondnav %} {% endblock %}
+{% block title %} Thông tin mua hàng {% endblock %}
 
 {% block tieude %}
 <h1 class="text-center thongtinmuahang-title">Thông tin mua hàng</h1>
 {% endblock %}
 
 {% block sanpham %}
-<form  class="was-validated form-muahang" id="form">
+<form class="was-validated form-muahang" id="form">
    <div class="mb-3 user-info">
      <label for="name" class="form-label">1. Họ và Tên</label>
-     <input type="text" class="form-control form-control-lg" id="name" placeholder="Hãy nhập Họ và Tên" name="name" required
+     <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Hãy nhập Họ và Tên" required
       {% if customer_info.name %}value="{{ customer_info.name }}"{% endif %}>
      <div class="valid-feedback">Valid.</div>
      <div class="invalid-feedback">Hãy điền đầy đủ thông tin</div>
    </div>
-   <!-- <div class="mb-3 user-info" >
-     <label for="sdt" class="form-label">2. Số điện thoại</label>
-     <input type="text" class="form-control form-control-lg" id="sdt" placeholder="Hãy nhập Số điện thoại" name="sdt" required>
-     <div class="valid-feedback">Valid.</div>
-     <div class="invalid-feedback">Hãy điền đầy đủ thông tin</div>
-   </div> -->
 
    <div class="mb-3 user-info">
       <label for="email" class="form-label">2. Email</label>
-      <input type="email" class="form-control form-control-lg" id="email" placeholder="Hãy nhập Email" name="email" required
+      <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Hãy nhập Email" required
         {% if user_info.email %}value="{{ user_info.email }}"{% endif %}>
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Hãy điền đầy đủ thông tin</div>
     </div>
+
     <div class="mb-3 shipping-info">
       <label for="address" class="form-label">3. Địa chỉ</label>
-      <input type="text" class="form-control form-control-lg" id="address" placeholder="Hãy nhập địa chỉ" name="address" required
+      <input type="text" class="form-control form-control-lg" id="address" name="address" placeholder="Hãy nhập địa chỉ" required
       {% if customer_info.address %}value="{{ customer_info.address }}"{% endif %}>
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Hãy điền đầy đủ thông tin</div>
     </div>
-    <label for="" class="mb-3 payment-info">4. Hình thức thanh toán</label>
+
+    <label class="mb-3 payment-info">4. Hình thức thanh toán</label>
     <div class="form-check mb-3">
       <input class="form-check-input" type="radio" name="thanhtoan" id="thanhtoankhinhanhang">
       <label class="form-check-label" for="thanhtoankhinhanhang">
@@ -57,32 +52,30 @@
         Thanh toán chuyển khoản
       </label>
     </div>
+
     <div class="col-lg-9">
-			<div class="box-element">
-				<hr>
-				<h3>Hóa đơn</h3>
-				<hr>
-				{% for item in items %}
-				<div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="/media/{{item.product.image}}"></div>
-					<div style="flex:2"><p>{{item.product.product_name}}</p></div>
-					<div style="flex:1"><p>{{item.product.price}}</p></div>
-					<div style="flex:1"><p>x{{item.quantity}}</p></div>
-				</div>
-				{% endfor %}
-				<h5>Số lượng:   {{cartItems}}</h5>
-				<h5>Tổng:   {{order.get_cart_total}}</h5>
-			</div>
-		</div>
+      <div class="box-element">
+        <hr>
+        <h3>Hóa đơn</h3>
+        <hr>
+        {% for item in items %}
+        <div class="cart-row">
+          <div style="flex:2"><img class="row-image" src="/media/{{item.product.image}}"></div>
+          <div style="flex:2"><p>{{item.product.product_name}}</p></div>
+          <div style="flex:1"><p>{{item.product.price}}</p></div>
+          <div style="flex:1"><p>x{{item.quantity}}</p></div>
+        </div>
+        {% endfor %}
+        <h5>Số lượng: {{cartItems}}</h5>
+        <h5>Tổng: {{order.get_cart_total}}</h5>
+      </div>
+    </div>
 
     <div class="d-grid gap-2 col-4 mx-auto mt-5">
          <button type="submit" class="btn btn-primary btn-lg btn-nopform" id="form-button">Gửi</button>
     </div>
- </form>
-
- 
+</form>
 {% endblock %}
-
 {% block checkoutjs %}
 <script type="text/javascript">
   var total = '{{order.get_cart_total}}'
@@ -118,22 +111,25 @@
     
 
     function submitFormData(){
+      console.log('Button Clicked');
+
+       const paymentMethod = document.querySelector('input[name="thanhtoan"]:checked')?.id || 'thanhtoanonline';
+
       // console.log('Payment button clicked')
-      console.log('Button Clicked')
       var userFormData = {
       'name':null,
       'email':null,
       'total':total,
+      'payment_method': paymentMethod,
     }
 
     var shippingInfo = {
-      'address':null,
+      'address':form.address.value,
       // 'city':null,
       // 'state':null,
       // 'zipcode':null,
     }
   
-        shippingInfo.address = form.address.value
        
       if (user == 'AnonymousUser'){
         userFormData.name = form.name.value
@@ -147,7 +143,7 @@
       fetch(url, {
         method:'POST',
         headers:{
-          'Content-Type':'applicaiton/json',
+          'Content-Type':'application/json',
           'X-CSRFToken':csrftoken,
         }, 
         body:JSON.stringify({'form':userFormData, 'shipping':shippingInfo}),
